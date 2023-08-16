@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&family=Nanum+Brush+Script&family=Noto+Sans+KR:wght@300&display=swap');
+
+:root{
+  --main-color: #26c6da;
+  --sub-color: #0097a7;
+  --base-width: 70%;
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+body::-webkit-scrollbar{
+  display: none;
+}
