@@ -22,19 +22,17 @@ const userSchema = new Schema({
   },
   repassword: {
     type: String,
-    required: true,
   },
   birth: {
-    type: Stirng,
-    
-  }
+    type: String,
+  },
   isAdmin: {
     type: Boolean,
     default: false,
   },
   createdAt: {
     type: Date,
-    defautl: Date.now,
+    default: Date.now,
   },
   lastModifiedAt: {
     type: Date,

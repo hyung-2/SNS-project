@@ -12,7 +12,7 @@ mongoose.connect(config.MONGODB_URL)
   .catch(e => console.log(`failed to connect mongodb- ${e}`))
 
 const corsOptions = {
-  origin: 'htt://127.0.0.1:5500',
+  origin: 'http://127.0.0.1:5501',
   credentials: true
 }
 
@@ -29,5 +29,7 @@ app.use('/api/users', usersRouter)
 
 
 app.listen(5002, () => {
-  console.log('server is running on port 5000 ...')
+  console.log('server is running on port 5002 ...')
 })
+
+module.exports = usersRouter

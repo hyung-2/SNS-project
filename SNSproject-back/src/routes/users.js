@@ -1,6 +1,7 @@
 const express = require('express')
 const User = require('../models/User')
 const expressAsyncHandler = require('express-async-handler')
+const { makeToken, isAuth } = require('../../auth')
 
 const router = express.Router()
 
@@ -9,25 +10,44 @@ router.post('/register', expressAsyncHandler(async (req, res, next) => {
   console.log(req.body)
   const user = new User({
     userId: req.body.userId,
-    name: req.body.username,
-    email: req.body.useremail,
-    password: req.body.userPw,
-    repassword: req.body.userPw2,
+    name: req.body.name,
+    email: req.body.email,
+    birth: req.body.birth,
+    password: req.body.password,
   })
 
   const newUser = await user.save()
   if(!newUser){
     res.status(401).json({code: 401, message: '계정 생성에 실패했습니다.'})
   }else{
-    const { naem, userId, email, isAdmin, createdAt } = newUser
+    const { name, userId, email, isAdmin, createdAt } = newUser
     res.json({
       code: 200,
       message: '성공적으로 계정을 생성했습니다.',
-      token: null, //추후 토큰생성해주기
-      naem, userId, email, isAdmin, createdAt
+      token: makeToken(newUser), //추후 토큰생성해주기
+      name, userId, email, isAdmin, createdAt
     })
   }
 }))
 
+//로그인
+router.post('/login', expressAsyncHandler(async (req, res, next) => {
+  console.log(req.body)
+  const loginUser = await User.findOne({
+    email: req.body.email,
+    password: req.body.password,
+  })
+  if(!loginUser){
+    res.status(401).json({code: 401, message: 'email이나 비밀번호를 확인해주세요.'})
+  }else{
+    const { name, userId, email, isAdmin, createdAt } = loginUser
+    res.json({
+      code: 200,
+      message: '로그인에 성공하였습니다!',
+      token: makeToken(loginUser),
+      name, userId, email, isAdmin, createdAt
+    })
+  }
+}))
 
 module.exports = router
