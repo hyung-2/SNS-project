@@ -1,0 +1,214 @@
+@import url('global.css');
+@import url('header.css');
+@import url('button.css');
+@import url('https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&family=Nanum+Brush+Script&display=swap');
+
+
+.container{
+  display: flex;
+  width: 90%;
+  margin: auto;
+  margin-top: 5rem;
+  position: relative;
+}
+section{
+  border: 1px solid var(--box-color);
+  border-radius: 1rem;
+  margin: 0 1rem;
+  /* box-shadow: 0 0 .3rem #ccc; */
+  display: flex;
+  color: var(--sub-color);
+  padding: 1rem;
+}
+
+.imgbox{
+  /* border: 1px solid black; */
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+}
+.imgbox img{
+  width: 100%; height: 100%;
+}
+
+.my-info{
+  flex: 1;
+  text-align: center;
+  font-size: .9rem;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+}
+.my-info h4{
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.my-info .imgbox{
+  width: 100px; height: 100px;
+  margin-bottom: 1rem;
+}
+.my-info .infobox{
+  text-align: left;
+  width: 100%;
+}
+.my-info .infobox > div{
+  margin-bottom: .2rem;
+}
+
+.main{
+  flex: 5;
+  display: flex;
+  flex-flow: column;
+  border: none;
+  padding: 0;
+}
+.main .main-box{
+  width: 100%; height: 250px;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: 1px solid var(--box-color);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  min-width: 600px;
+}
+.main .copy{
+  display: flex;
+  flex-flow: column-reverse;
+}
+.main .copy .main-box{
+  height: 100%;
+}
+.main .main-box .zeazal-box{
+  flex: 3;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid var(--box-color);
+  width: 100%;
+}
+.main .main-box .zeazal-box .box-profile{
+  display: flex;
+  flex-flow: column;
+  /* align-items: center; */
+  justify-content: space-between;
+  margin-right: 1rem;
+  height: 100%;
+}
+.main .main-box .zeazal-box .box-profile .imgbox{
+  width: 60px; height: 60px;
+}
+.main .main-box .zeazal-box .box-profile .link{
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 2rem;
+  justify-content: flex-start;
+}
+.main .main-box .zeazal-box .box-profile .link a{
+  color: var(--sub-color);
+  text-decoration: none;
+  font-size: .8rem;
+  transition: .3s;
+}
+.main .main-box .zeazal-box .box-profile .link a:hover{
+  letter-spacing: .1rem;
+  font-weight: bold;
+}
+.main .main-box .content-box{
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+}
+.main .main-box .content-box .id-box{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+.main .main-box .content-box .id-box button{
+  font-size: .7rem;
+}
+
+.main .main-box .content-box .main-content{
+  /* border: 1px solid var(--box-color); */
+  width: 100%;
+  height: 75%;
+  padding-right: 1rem;
+  padding-bottom: 2rem;
+  text-align: start;
+  overflow-y: auto;
+}
+.main .main-box .content-box .main-content:focus{
+  outline: none;
+  border: 1px solid var(--box-color);
+}
+.main .main-box .reaple-box{
+  display: flex;
+  align-items: center;
+  padding-top: .5rem;
+  width: 100%;
+}
+.main .main-box .reaple-box h3{
+  flex: 1;
+  font-size: 1rem;
+}
+.main .main-box .reaple-box .reaple-content{
+  flex: 8;
+  width: 100%; height: 100%;
+  border-bottom: 1px solid var(--box-color);
+}
+.main .main-box .reaple-box .reaple-content:focus{
+  outline: none;
+}
+.main .main-box .reaple-box button{
+  flex: .5;
+  font-size: .7rem;
+  margin-left: .5rem;
+}
+.main .main-box .reaple-box .delete{
+  background-color: transparent;
+  color: var(--main-color);
+  padding: 0;
+  margin: 0;
+}
+.main .main-box .reaple-box .delete:hover{
+  color: var(--sub-color);
+}
+.main .main-box .reaple-box button span{
+  font-size: 1.2rem;
+}
+.friend{
+  flex: 1;
+  flex-flow: column;
+  text-align: center;
+  height: 250px;
+}
+.friend h4{
+  margin-bottom: 1rem;
+}
+.friend .friend-profile{
+  height: 50px;
+  border: 1px  solid var(--box-color);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: .4rem;
+}
+.friend .friend-profile .imgbox{
+  width: 35px; height: 35px;
+  margin-left: .5rem;
+}
+.friend .friend-profile h3{
+  font-size: .8rem;
+  margin-left: .5rem;
+}
+

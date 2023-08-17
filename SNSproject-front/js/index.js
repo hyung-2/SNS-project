@@ -65,19 +65,24 @@ function checkUserInfo(e){
       method: 'POST', 
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        userId: registerCon.id.value,
-        name: registerCon.name.value,
-        email: registerCon.email.value,
+        userId: id.value,
+        name: name.value,
+        email: email.value,
         birth: `${yearOfBirth.options[yearOfBirth.selectedIndex].value}년 ${monthOfBirth.options[monthOfBirth.selectedIndex].value}월 ${dayOfBirth.options[dayOfBirth.selectedIndex].value}일`,
-        password: registerCon.password.value,
-        repassword: registerCon.repassword.value,
+        password: password.value,
+        repassword: repassword.value,
       })
     })
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => {
+        if(data.code == 401){
+          alert(`code:${data.code}, ${data.message}`)
+        }else if(data.code == 200){
+          alert(`code:${data.code}, ${data.message}`)
+        }
+      })
       .catch(e => console.log(e))
 
-      alert('계정을 생성하였습니다!')
 
       registerCon.classList.add('close')
       blurbox.classList.add('close')
@@ -112,15 +117,16 @@ function checkLoginUserInfo(){
         if(data.code == 401){
           alert(`code:${data.code}, ${data.message}`)
         }else if(data.code == 200){
+          console.log(data)
+          localStorage.setItem('name', data.name)
+          localStorage.setItem('token', data.token)
           alert(`code:${data.code}, ${data.message}`)
-          window.location.href = "SNSproject-front/html/main.html"
+          window.location.href = "./SNSproject-front/html/main.html"
         }
       })
       .catch(e => console.log(e))
   }
 }
-
-
 
 
 function checking(name,content){

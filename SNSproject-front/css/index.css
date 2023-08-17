@@ -1,4 +1,5 @@
 @import url('global.css');
+@import url('button.css');
 @import url('https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&family=Nanum+Brush+Script&display=swap');
 
@@ -97,16 +98,9 @@
   margin: 2.1rem 0;
 }
 .login-container .form button{
-  border-radius: 0.6rem;
-  border: none;
-  padding: .3rem 0;
   font-size: 1rem;
-  cursor: pointer;
-  background-color: var(--main-color);
 }
-.login-container .form button:hover{
-  background-color: var(--sub-color);
-}
+
 
 .register-container{
   width: 500px; height: 80vh;
@@ -206,18 +200,12 @@
   cursor: pointer;
 }
 .register-container button{
-  border-radius: 0.6rem;
   margin: auto;
   width: 80%;
-  border: none;
   padding: .5rem 0;
   font-size: 1rem;
-  cursor: pointer;
-  background-color: var(--main-color);
 }
-.register-container button:hover{
-  background-color: var(--sub-color);
-}
+
 .register-container .closebtn{
   background: transparent;
   position: absolute;

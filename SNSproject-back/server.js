@@ -12,7 +12,7 @@ mongoose.connect(config.MONGODB_URL)
   .catch(e => console.log(`failed to connect mongodb- ${e}`))
 
 const corsOptions = {
-  origin: 'http://127.0.0.1:5501',
+  origin: 'http://127.0.0.1:5502',
   credentials: true
 }
 

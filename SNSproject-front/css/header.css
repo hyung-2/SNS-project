@@ -1,0 +1,23 @@
+@import url('button.css');
+
+header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  /* border-bottom: 1px solid #ccc; */
+  box-shadow: 0 0 1rem #ccc;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+header a {
+  text-decoration: none;
+}
+header a h1{
+  font-family: 'East Sea Dokdo', cursive;
+  font-weight: 100;
+  font-size: 3rem;
+  color: var(--main-color);
+}
