@@ -3,7 +3,7 @@ const logoutBtn = document.querySelector('.logoutbtn')
 const postBtn = document.querySelector('.postbtn')
 const mainCon = document.querySelector('.main')
 const copyCon = document.querySelector('.copy')
-
+const mainBox = mainCon.querySelector('.main-content')
 
 //윈도우 로드시
 window.addEventListener('load', function(){
@@ -11,14 +11,17 @@ window.addEventListener('load', function(){
   myIds.forEach(myid => 
     myid.innerText = `${localStorage.getItem('name')}`
     )
-  
+
+  mainBox.focus()
+  addfiles()
+
+  // console.log(copyCon.childElementCount) 나중ㅇ ㅔ올린 게시글수 연동하면될듯
 })
 
 //로그아웃 버튼 클릭
 logoutBtn.addEventListener('click', function() {
   fetch('http://127.0.0.1:5002/api/users/logout',{
       method: 'POST', 
-      
     })
       // .then(response => response.json())
       .then(data => {console.log(data)
@@ -54,7 +57,7 @@ postBtn.addEventListener('click', function(){
             <button>삭제</button>
           </div>
         </div>
-        <div class="main-content" contenteditable="false">${mainCon.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.innerText}</div>
+        <div class="main-content" contenteditable="false">${mainCon.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.innerHTML}</div>
       </div>
     </div>
     <div class="reaple-box">
@@ -65,6 +68,8 @@ postBtn.addEventListener('click', function(){
   `
   copyCon.append(mainBox)
   textbox.innerText = ''
+  textbox.focus()
+  addfiles()
  // 시간나면 글자수제한 설정
   }else{
     alert('빈 게시글입니다.')
@@ -76,13 +81,18 @@ copyCon.addEventListener('click', function(e){
   const repostBtn = document.querySelector('.repost')
   const contentBox = e.target.parentElement.parentElement.nextElementSibling
   if(e.target.innerText == '수정'){
+    //수정하기
     repostBtn.innerText = '완료'
     contentBox.contentEditable = 'true'
+    contentBox.classList.add('boxline')
   }else if(e.target.innerText == '완료'){
+    //수정완료
     repostBtn.innerText = '수정'
-    contentBox.innerText = contentBox.innerText
+    contentBox.innerHTML = contentBox.innerHTML
     contentBox.contentEditable = 'false'
+    contentBox.classList.remove('boxline')
   }else if(e.target.innerText == '삭제'){
+    //삭제하기
     console.log(e.target.parentElement.parentElement.parentElement.parentElement.parentElement)
     const value = confirm('게시글을 삭제하면 되돌릴수 없습니다.')
     if(value == true){
@@ -91,6 +101,7 @@ copyCon.addEventListener('click', function(e){
       return 
     }
   }else if(e.target.innerText == 'OK' && e.target.previousElementSibling.innerText !== ''){
+    //댓글달기
     console.log(e.target.parentElement)
     console.log(e.target.previousElementSibling)
     const reBox = document.createElement('div')
@@ -105,7 +116,65 @@ copyCon.addEventListener('click', function(e){
   }else if(e.target.innerText == 'OK' && e.target.previousElementSibling.innerText == ''){
     alert('빈 댓글입니다.')  
   }else if(e.target.innerText == 'close'){
+    //댓글 삭제하기
     e.target.parentElement.parentElement.parentElement.removeChild(e.target.parentElement.parentElement)
   }
 console.log(e.target)
 })
+
+
+//다음줄로
+function createNewLine(){
+  const newline = document.createElement('div')
+  newline.innerHTML = `<br/>`
+  return newline
+}
+
+function addFileToCurrentLine(line, file){
+  if(line.nodeType === 3){
+    line = line.parentNode
+  }
+  console.log(line)
+  line.insertAdjacentElement('afterend', createNewLine())
+  line.nextSibling.insertAdjacentElement('afterbegin', file)
+  line.nextSibling.insertAdjacentElement('afterend', createNewLine())
+  return line.nextSibling.nextSibling
+}
+
+
+
+function addfiles(){
+  mainBox.insertAdjacentElement("afterbegin", createNewLine())
+  let lastCaretLine = mainBox.firstChild
+  console.log(lastCaretLine)
+  const uploadInput = this.document.querySelector('.upload input')
+  uploadInput.addEventListener('change', function(e){
+    const files = this.files
+    if(files.length > 0){
+      for(let file of files){
+        const fileType = file.type
+        console.log(fileType)
+        console.log(lastCaretLine.nodeType)
+        if(fileType.includes('image')){
+          const img = document.createElement('img')
+          img.src = URL.createObjectURL(file)
+          lastCaretLine = addFileToCurrentLine(lastCaretLine, img)
+        }else if(fileType.includes('video')){
+          const video = document.createElement('video')
+          video.controls = true
+          video.src = URL.createObjectURL(file)
+          lastCaretLine = addFileToCurrentLine(lastCaretLine, video)
+        }
+      }
+    }
+    //커서 위치 추가한 파일아래 보이기
+    const selection = document.getSelection()
+    selection.removeAllRanges()
+
+    const range = document.createRange()
+    range.selectNodeContents(lastCaretLine)
+    range.collapse()
+    selection.addRange(range)
+    mainBox.focus()
+  })
+}

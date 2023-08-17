@@ -45,12 +45,17 @@
           <div class="content-box">
             <div class="id-box">
               <h3 class="myID">아이디</h3>
+              <div class="tools">
+                <a href="#"><label for="upload"><span class="material-symbols-outlined">add_photo_alternate</span></label></a>
+                <a href="#"><label for="upload"><span class="material-symbols-outlined">video_call</span></label></a>
+                <a href="#"><span class="material-symbols-outlined">sentiment_satisfied</span></a>
+              </div>
               <div class="btn">
                 <button class="postbtn">글쓰기</button>
                 <button>삭제</button>
               </div>
             </div>
-            <div class="main-content" contenteditable>
+            <div class="main-content boxline" contenteditable>
               
             </div>
           </div>
@@ -80,6 +85,11 @@
       </div>
     </section>
   </div>
+
+  <div class="upload close">
+    <input type="file" id="upload" name="upload" multiple>
+  </div>
+
   <script src="../js/main.js"></script>
 </body>
 </html>
