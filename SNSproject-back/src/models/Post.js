@@ -31,6 +31,10 @@ const postSchema = new Schema({
   lastModifiedAt: {
     type: Date,
     default: Date.now,
+  },
+  createPost:{
+    type: String,
+    // default: Date.now,
   }
 })
 
