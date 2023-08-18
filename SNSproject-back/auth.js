@@ -14,7 +14,7 @@ const makeToken = (user) => {
   },
   config.JWT_SECRET,
   {
-    expiresIn: '7d',
+    expiresIn: '1d',
     issuer: 'hyung'
   })
 }

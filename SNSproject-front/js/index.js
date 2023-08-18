@@ -48,7 +48,7 @@ function checkUserInfo(e){
   let password = document.getElementById('userPw')
   let repassword = document.getElementById('userPw2')
   checking(id,'아이디를 입력해주세요.')
-  checking(name,'이름을 입력해주세요.')
+  // checking(name,'이름을 입력해주세요.')
   checking(email,'이메일을 입력해주세요.')
   checking(password,'비밀번호를 입력해주세요.')
   checking(repassword,'비밀번호를 다시 입력해주세요.')
@@ -66,7 +66,7 @@ function checkUserInfo(e){
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
         userId: id.value,
-        name: name.value,
+        // name: name.value,
         email: email.value,
         birth: `${yearOfBirth.options[yearOfBirth.selectedIndex].value}년 ${monthOfBirth.options[monthOfBirth.selectedIndex].value}월 ${dayOfBirth.options[dayOfBirth.selectedIndex].value}일`,
         password: password.value,
@@ -118,7 +118,7 @@ function checkLoginUserInfo(){
           alert(`code:${data.code}, ${data.message}`)
         }else if(data.code == 200){
           console.log(data)
-          localStorage.setItem('name', data.name)
+          localStorage.setItem('userId', data.userId)
           localStorage.setItem('token', data.token)
           alert(`code:${data.code}, ${data.message}`)
           window.location.href = "./SNSproject-front/html/main.html"

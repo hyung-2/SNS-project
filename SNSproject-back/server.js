@@ -6,6 +6,7 @@ const app = express()
 const logger = require('morgan')
 
 const usersRouter = require('./src/routes/users')
+const postsRouter = require('./src/routes/posts')
 
 mongoose.connect(config.MONGODB_URL)
   .then(() => console.log('mongodb connected ...'))
@@ -22,6 +23,7 @@ app.use(logger('tiny'))
 
 app.use(express.urlencoded({extended: true}))
 app.use('/api/users', usersRouter)
+app.use('/api/posts', postsRouter)
 
 
 
