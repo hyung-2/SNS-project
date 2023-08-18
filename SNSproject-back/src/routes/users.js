@@ -55,15 +55,15 @@ router.post('/logout', expressAsyncHandler(async (req, res, next) => {
   res.json({code: 200, message: '로그아웃하였습니다.'})
 }))
 
-//현재 사용자 조회
-router.get('/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
-  const user = await User.find(req.params.id)
-  if(!user){
-    res.status(404).json({code: 404, message: '사용자를 찾을 수 없습니다.'})
-  }else{
-    res.json({code: 200, user})
-  }
-}))
+// //현재 사용자 조회
+// router.get('/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
+//   const user = await User.find(req.params.id)
+//   if(!user){
+//     res.status(404).json({code: 404, message: '사용자를 찾을 수 없습니다.'})
+//   }else{
+//     res.json({code: 200, user})
+//   }
+// }))
 
 
 module.exports = router

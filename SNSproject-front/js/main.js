@@ -4,6 +4,8 @@ const postBtn = document.querySelector('.postbtn')
 const mainCon = document.querySelector('.main')
 const copyCon = document.querySelector('.copy')
 const mainBox = mainCon.querySelector('.main-content')
+const myPost = document.querySelector('.myzeazal')
+
 //윈도우 로드시
 window.addEventListener('load', function(){
   //사용자 이름으로 넣기
@@ -22,6 +24,7 @@ window.addEventListener('load', function(){
     .then(response => response.json())
     .then(datas => {
       console.log(datas)
+      myPost.innerText = `올린 게시글 수 ${datas.posts.length}`
       datas.posts.forEach(post => {
         // console.log(post)
         const mainBox = document.createElement('div')
@@ -40,7 +43,7 @@ window.addEventListener('load', function(){
             </div>
             <div class="content-box">
               <div class="id-box">
-                <h3 class="myID">${localStorage.getItem('name')}</h3>
+                <h3 class="myID">${post.author.userId}</h3>
                 <div class="date">${post.createPost}</div>
                 <div class="btn">
                   <button class="repost">수정</button>
@@ -53,7 +56,7 @@ window.addEventListener('load', function(){
             </div>
           </div>
           <div class="reaple-box">
-            <h3 class="myID">${localStorage.getItem('name')}</h3>
+            <h3 class="myID">${post.author.userId}</h3>
             <div class="reaple-content" contenteditable></div>
             <button>OK</button>
           </div>
@@ -72,23 +75,16 @@ window.addEventListener('load', function(){
         //   vedio.src = post.vedioUrl
         //   div.append(video)
         // }
-        //innerHTML로 하면 되는데 링크로 불러온다고 뻘짓함-createURL이 유효하지않음
+        //innerHTML로 하면 createURL이 유효하지않음 근데 이것도..
 
-
-      })
+       })
+      
     })
     .catch(e => console.log(e))
-
 
   mainBox.focus()
   addfiles()
   
-
-  
-  
-
-
-  // console.log(copyCon.childElementCount) 나중ㅇ ㅔ올린 게시글수 연동하면될듯
 })
 
 
@@ -188,7 +184,10 @@ postBtn.addEventListener('click', function(){
     textbox.focus()
     addfiles()
     lastCaretLine = textbox.firstChild
-    // 시간나면 글자수제한 설정
+    location.reload()
+
+
+    // 시간날때 글자수제한 설정
     
     
     // console.log(addfiles.lastCaretLine)
@@ -227,6 +226,7 @@ copyCon.addEventListener('click', function(e){
     })
       .then(data => {console.log(data)})
       .catch(e => console.log(e))
+      location.reload()
     }else{
       return 
     }
@@ -281,7 +281,7 @@ function addFileToCurrentLine(line, file){
 function addfiles(){
   mainBox.insertAdjacentElement("afterbegin", createNewLine())
   let lastCaretLine = mainBox.firstChild
-  //위에 두줄은 따로 빼주면 이미지중복이 일어나지 않을것
+  //위에 두줄은 따로 빼주면 이미지중복이 일어나지 않을것 - 새로고침넣었더니 괜찮아짐,,
   console.log(lastCaretLine)
   const uploadInput = this.document.querySelector('.upload input')
   uploadInput.addEventListener('change', function(e){
