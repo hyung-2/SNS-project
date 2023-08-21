@@ -43,7 +43,7 @@ subBtn.addEventListener('click', function(e){
 //사용자 정보 검사 - 회원가입용
 function checkUserInfo(e){
   let id = document.getElementById('userId')
-  let name = document.getElementById('username')
+  // let name = document.getElementById('username')
   let email = document.getElementById('useremail')
   let password = document.getElementById('userPw')
   let repassword = document.getElementById('userPw2')

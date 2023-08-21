@@ -136,6 +136,11 @@ section{
   justify-content: space-between;
   margin-bottom: 1rem;
   width: 100%;
+  position: relative;
+}
+.main .main-box .content-box .id-box .myID{
+  position: relative;
+  left: 0;
 }
 .main .main-box .content-box .id-box button{
   font-size: .7rem;
@@ -248,7 +253,7 @@ section{
 
 .date{
   font-size: .8rem;
-  margin-left: 11rem;
+  /* margin-right: 1rem; */
 }
 
 .imoticon-box{

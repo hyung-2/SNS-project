@@ -20,6 +20,10 @@ const postSchema = new Schema({
     type: String,
     trim: true,
   }],
+  files: [{
+    type:String,
+    trim: true,
+  }],
   friendUser: [{
     type: ObjectId,
     ref: 'friend'
