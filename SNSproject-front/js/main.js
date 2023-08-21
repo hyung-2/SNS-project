@@ -5,6 +5,8 @@ const mainCon = document.querySelector('.main')
 const copyCon = document.querySelector('.copy')
 const mainBox = mainCon.querySelector('.main-content')
 const myPost = document.querySelector('.myzeazal')
+const dropBtn = document.querySelector('.dropdown')
+const imoticonBox = document.querySelector('.imoticon-box')
 
 //윈도우 로드시
 window.addEventListener('load', function(){
@@ -85,6 +87,13 @@ window.addEventListener('load', function(){
   mainBox.focus()
   addfiles()
   
+  //드롭다운 외부 클릭시 창 닫기
+  document.addEventListener('click',function(e){
+    console.log(e.target)
+    if(dropBtn && !dropBtn.contains(e.target)){
+      imoticonBox.classList.add('close')
+    }
+  })
 })
 
 
@@ -154,6 +163,9 @@ postBtn.addEventListener('click', function(){
 
     const videoUrl = []
     videos.forEach(video => {videoUrl.push(video.src)})
+
+    let data = new FormData()
+    data.append('file', file)
 
     fetch('http://127.0.0.1:5002/api/posts/',{
       method: 'POST', 
@@ -277,7 +289,7 @@ function addFileToCurrentLine(line, file){
 }
 
 
-
+//사진,동영상,이모티콘 추가
 function addfiles(){
   mainBox.insertAdjacentElement("afterbegin", createNewLine())
   let lastCaretLine = mainBox.firstChild
@@ -317,8 +329,46 @@ function addfiles(){
     selection.addRange(range)
     mainBox.focus()
   })
-}
+  //글에 이모티콘 추가
+  imoticonBox.addEventListener('click', function(e){
+    e.stopPropagation()
+    // console.log(e.target)
+    if(e.target !== imoticonBox){
+      if(mainBox.firstElementChild === lastCaretLine && lastCaretLine.innerHTML === '<br>'){
+        lastCaretLine.innerHTML = '' 
+        console.log('라스트')
+        mainBox.lastElementChild.append(e.target.innerText)
+      }else if(mainBox.lastElementChild.innerHTML === '<br>'){
+        mainBox.lastElementChild.innerHTML = ''
+        mainBox.lastElementChild.append(e.target.innerText) 
+      }else{
+        mainBox.lastElementChild.append(e.target.innerText) 
+      }
+    }
+  })
 
+}
+//드롭다운 열기
+dropBtn.addEventListener('click', function(e){
+  e.stopPropagation()
+  // console.log(e.target)
+  if(e.target.innerText == 'sentiment_satisfied'){
+    imoticonBox.classList.toggle('close')
+  }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+//날짜 포맷
 function dateNow(){
   const date = new Date()
   let dateFormat = (`${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`)
