@@ -119,6 +119,7 @@ function checkLoginUserInfo(){
         }else if(data.code == 200){
           console.log(data)
           localStorage.setItem('userId', data.userId)
+          localStorage.setItem('email', data.email)
           localStorage.setItem('token', data.token)
           alert(`code:${data.code}, ${data.message}`)
           window.location.href = "./SNSproject-front/html/main.html"

@@ -9,6 +9,7 @@ const mainBox = mainCon.querySelector('.main-content')
 const myPost = document.querySelector('.myzeazal span')
 const dropBtn = document.querySelector('.dropdown')
 const imoticonBox = document.querySelector('.imoticon-box')
+const fixMyInfo = document.querySelector('.re-info')
 
 //윈도우 로드시
 window.addEventListener('load', function(event){
@@ -25,7 +26,7 @@ window.addEventListener('load', function(event){
   
   let offset = 0
   let loadNum = 10
-  //기존 작성한 게시글 들고오기
+  //기존 작성한 게시글 들고오기(최신순)
   this.fetch('http://127.0.0.1:5002/api/posts/new',{
     method: 'GET',
     headers: {
@@ -35,9 +36,11 @@ window.addEventListener('load', function(event){
   })
     .then(response => response.json())
     .then(datas => {
+      console.log(datas)
       myPost.innerText = `${datas.posts.length}`
 
       showData(datas)
+      localStorage.setItem('author', datas.posts[0].author)
 
 
       
@@ -435,7 +438,10 @@ dropBtn.addEventListener('click', function(e){
   }
 })
 
-
+//내정보 수정
+fixMyInfo.addEventListener('click', function(){
+  window.location.href = "./userInfo.html"
+})
 
 
 

@@ -1,10 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Orbit&display=swap');
+
 button{
   border-radius: 0.6rem;
   border: none;
   padding: .3rem .5rem;
-  font-size: .9rem;
+  font-size: 1rem;
   cursor: pointer;
   background-color: var(--main-color);
+  font-family: 'jua', sans-serif;
+  /* font-weight: bold; */
 }
 button:hover{
   background-color: var(--sub-color);

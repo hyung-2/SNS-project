@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>재잘재잘 - 회원정보 수정</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="../css/userInfo.css">
+</head>
+<body>
+  <header>
+    <a href="main.html">
+      <h1>재잘재잘</h1>
+    </a>
+    <div class="btn">
+      <button class="logoutbtn">로그아웃</button>
+    </div>
+  </header>
+  <section>
+    <form class="register-container">
+      <h2>회원정보 수정</h2>
+      <div class="inputbox">
+        <div class="infobox">
+          <label for="userId">
+            <p class="forcusing">ID</p>
+            <input type="text" id="userId" placeholder="나중에 자동으로">
+          </label>
+          <label for="useremail">
+            <p class="forcusing">이메일</p>
+            <input type="text" id="useremail" placeholder="서버에서 값불러와서" >
+            <button class="checkbtn">중복확인</button>
+          </label>
+          <label for="pw">
+            <p class="forcusing">&nbsp;&nbsp;현재 &nbsp; 비밀번호</p>
+            <input type="password" id="pw" placeholder="입력해야 수정가능">
+          </label>
+          <label for="userPw">
+            <p class="forcusing">비밀번호</p>
+            <input type="password" id="userPw" placeholder="들어와있게">
+          </label>
+          <label for="userPw2">
+            <p class="forcusing">비밀번호 재입력</p>
+            <input type="password" id="userPw2" placeholder="비밀번호를 다시 입력하세요">
+          </label>
+        </div>
+        <div class="profilebox">
+          <a href="#">
+            <label for="profile">
+              <span class="forcusing">프로필 사진 변경하기</span>
+            <!-- <a href=""><button>사진 올리기</button></a> -->
+            </label>
+          </a>
+          <div class="imgbox">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAIVBMVEXY2Njz8/Pq6urv7+/h4eHb29vo6Oje3t7j4+Pt7e3p6ekmc3lwAAADMElEQVR4nO2bC3KDMAxEMeab+x+4JZQBEkhBlq2NZt8JvGOtPkZUFSGEEEIIIYQQQgghhBBCCCEEnXbo6hjDLzHW3dBan0dEO9ThjfrrxDQHKv60NNZnu0ETz2Q8w+xbpPQfZTyl9NZnvEB7GlS7AIP3SnNFxgR4fHVXdYTQWZ/1A+14XUcII2x4tf+6fE8EVXJXB6qS+zpAldzyx8Jofep3buSrLXC563L9eAWsnrRSHSFg2eRSX3JMbX32Lb1cRwhIHaQg865E69OviJ0+g+P3pAsBupLEC8G5koSUNQOSuBJqyAJGLRnShQzWGp4kRxZKbKXrCMFaw4SCRTBMomARDJMIB5E9CGOJgtcx3J7Yn8wgdCluhGjogMi/FEIhmXBjdjdC3BRENy2Km6bRTRvvZrDyM+q6eXxw8xzk5oHOz5Opm0dsP58V3Hzo8fPpzc3HUD+fp90sDPhZ4fCzVONnzcnN4pmfVUA/y5mVm3XZys8Cs5+V8srNkv+Ek98uJpz8CDPh5NekGRc/ixFCCCHky2mb4TGO8cLkHuM4PoYGsGfph1r0Ih/rAWc2Oexz74DRE59PHre0GE8pvcoiykxnF2O96Ln3nNFGSqMs4ymlfIT9/1Qio/ADS6vojVe6gilMZUXrnFKbKfeeqiWUed5OXti4QgHTZ3THltxv9fnDaiFveOVKukfkTMRJmxr3yaakiM23ZLJ8cR2ZlBjoyKKksD8W1H1ipENdiWQ/QwflrYJidfAd1b2bQn3JMYrdiknCWlFLXSo/VqSgZRNDg8wo2STzPHgFlZnRPLAmNILLNGMtKGQus5K+J73Am5X0PckL9MYlZCW1mJin3oXEFAzikIk0l8BcSOKVAF1I2pVA1JCFlFpiffY9ch0wuXdGnoFVvnPqIf6JCaJd3CJtHQH69z3Sbh4ssuSxZX3ud2Q6oKrhjKwmwllEahI4i0hNAjJSbZGNV9anPkKiA64cTkhKIlijNSNptwCTlixtPawPfcRDIARoyl2RzLtuhACWEVkhcSPE+szHUAgaFIIGhaBBIWhQCBoUggaFoEEhaFAIGhSCBoWgQSFoUAgap8f9Ac1KQOtCVp1TAAAAAElFTkSuQmCC" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="btnbox">
+        <button type="button" class="delete-btn">계정 삭제하기</button>
+        <button type="submit" class="submit-btn">정보 수정하기</button>
+      </div>
+  
+    </form>
+  </section>
+  <!-- <form enctype="multipart/form-data"> -->
+    <input type="file" id="profile" name="userimg" accept="image/*" class="close">
+  <!-- </form> -->
+  <script src="../js/userInfo.js"></script>
+</body>
+</html>

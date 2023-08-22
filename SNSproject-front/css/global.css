@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&family=Nanum+Brush+Script&family=Noto+Sans+KR:wght@300&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans+KR&display=swap');
 :root{
   --main-color: #26c6da;
   --sub-color: #0097a7;
@@ -11,7 +11,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Nanum Gothic Coding', monospace;
 }
 
 body::-webkit-scrollbar{

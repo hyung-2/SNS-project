@@ -3,7 +3,7 @@
 @import url('button.css');
 @import url('https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&family=Nanum+Brush+Script&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Orbit&display=swap');
 
 .container{
   display: flex;
@@ -40,6 +40,7 @@ section{
   align-items: center;
   justify-content: center;
   height: 300px;
+  min-width: 160px;
 }
 .my-info h4{
   font-size: 1.2rem;
@@ -53,15 +54,22 @@ section{
   text-align: left;
   width: 100%;
 }
+.my-info .infobox > div{
+  margin-bottom: .2rem;
+}
 .my-info .infobox .myzeazal{
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.my-info .infobox > div{
-  margin-bottom: .2rem;
+.my-info .infobox .re-info{
+  cursor: pointer;
+  transition: .3s;
 }
-
+.my-info .infobox .re-info:hover{
+  letter-spacing: .02rem;
+  font-weight: bold;
+}
 .main{
   flex: 5;
   display: flex;
@@ -121,7 +129,7 @@ section{
   transition: .3s;
 }
 .main .main-box .zeazal-box .box-profile .link a:hover{
-  letter-spacing: .1rem;
+  letter-spacing: .05rem;
   font-weight: bold;
 }
 
@@ -143,6 +151,7 @@ section{
   width: 100%;
   position: relative;
 }
+
 .main .main-box .content-box .id-box .myID{
   position: relative;
   left: 0;
@@ -174,6 +183,7 @@ section{
   
   width: 100%;
   /* height: 75%; */
+  padding: .5rem;
   padding-right: 1rem;
   /* padding-bottom: 2rem; */
   text-align: start;
@@ -302,4 +312,7 @@ section{
 
 .close{
   display: none;
+}
+button{
+  font-weight: 300;
 }

@@ -26,6 +26,10 @@ const userSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  imgUrl: {
+    type: String,
+    default: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
