@@ -53,6 +53,11 @@ section{
   text-align: left;
   width: 100%;
 }
+.my-info .infobox .myzeazal{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .my-info .infobox > div{
   margin-bottom: .2rem;
 }
