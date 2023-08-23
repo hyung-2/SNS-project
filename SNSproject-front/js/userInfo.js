@@ -170,6 +170,7 @@ window.addEventListener('load',function(e){
           //프로필사진 저장
           const formData = new FormData()
           formData.append('userimg',fileInput.files[0])
+          console.log(formData)
           fetch(`http://127.0.0.1:5002/api/users/profile`, {
             method: 'POST',
             // headers: {

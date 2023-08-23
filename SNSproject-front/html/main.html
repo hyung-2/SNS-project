@@ -109,9 +109,9 @@
     </section>
   </div>
 
-  <form class="upload close" enctype="multipart/form-data">
-    <input type="file" id="uploadimg" name="upload" accept="image/*" multiple>
-    <input type="file" id="uploadvideo" name="upload" accept="video/*" multiple>
+  <form class="upload close" enctype="multipart/form-data" onsubmit="return false;">
+    <input type="file" id="uploadimg" name="uploadimg" accept="image/*">
+    <input type="file" id="uploadvideo" name="upload" accept="video/*">
   </form>
 
   <script src="../js/scroll.js"></script>

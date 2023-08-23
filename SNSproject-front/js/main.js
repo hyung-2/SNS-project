@@ -365,6 +365,7 @@ function addfiles(){
   console.log(lastCaretLine)
   const uploadInput = this.document.querySelector('.upload input')
   uploadInput.addEventListener('change', function(e){
+    e.preventDefault()
     const files = this.files
     if(files.length > 0){
       for(let file of files){
@@ -372,12 +373,36 @@ function addfiles(){
         // console.log(fileType)
         // console.log(lastCaretLine.nodeType)
         if(fileType.includes('image')){
+          //이미지 multer
+          
           const img = document.createElement('img')
+          //이미지 올리면 바로 multer되면서 새로고침됨 ㅡㅡ
+          const formData = new FormData()
+          console.log(files)
+          console.log(lastCaretLine.previousElementSibling)
+          for(let i=0; i<files.length; i++){
+            console.log(files[i])
+            formData.append('uploadimg',files[i])
+            console.log(formData)
+          }
+          fetch('http://127.0.0.1:5002/api/posts/img', {
+            method: 'POST',
+            body: formData
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data)
+              
+            }
+              )
+            .catch(e => console.log(e))
+
+          e.preventDefault()
+          
           img.src = URL.createObjectURL(file)
           lastCaretLine = addFileToCurrentLine(lastCaretLine, img)
-          // console.log(lastCaretLine)
-          // console.log(lastCaretLine.nextSibling)
           lastCaretLine.nextSibling = ''
+
         }else if(fileType.includes('video')){
           const video = document.createElement('video')
           video.controls = true

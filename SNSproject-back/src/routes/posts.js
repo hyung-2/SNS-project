@@ -21,13 +21,13 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({ storage : storage})
+let upload = multer({ storage : storage})
 
-//테스트
-router.post('/img', isAuth, upload.array('upload'), function( req, res, next){
+//이미지 multer(단일)
+router.post('/img', upload.single('uploadimg'), function( req, res){
   res.send({
     'uploaded:' : req.file,
-    imgUrl: req.file.path
+    imgurl: req.file.path
   })
   console.log(req.file)
 })
