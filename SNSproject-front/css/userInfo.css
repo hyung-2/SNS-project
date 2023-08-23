@@ -10,6 +10,7 @@ section{
   box-shadow: 0 0 1rem var(--box-color);
   text-align: left; 
   padding: 2rem;
+  min-width: 765px;
 }
 section form{
   width: 100%;
@@ -49,6 +50,9 @@ section form .inputbox .infobox label p{
   /* position: absolute; */
   text-align: center;
 }
+section form .inputbox .infobox label span{
+  position: absolute;
+}
 section form .inputbox .infobox label input {
   outline: none;
   border: 1px solid #eee;
@@ -72,7 +76,8 @@ section form .inputbox .profilebox{
   justify-content: center;
   align-items: center;
 }
-section form .inputbox .profilebox a{
+section form .inputbox .profilebox a,
+section form .inputbox .profilebox .normal{
   text-decoration: none;
   color: var(--main-color);
   font-weight: bold;
@@ -81,12 +86,17 @@ section form .inputbox .profilebox a{
   transition: .3s ;
   border: 1px solid var(--main-color);
   cursor: pointer;
+  width: 90%;
 }
-section form .inputbox .profilebox a:hover{
+section form .inputbox .profilebox a:hover,
+section form .inputbox .profilebox .normal:hover{
   color: #fff;
   background-color: var(--sub-color);
   border: 1px solid var(--sub-color);
   letter-spacing: .02rem;
+}
+section form .inputbox .profilebox .normal{
+  margin-top: .5rem;
 }
 section form .inputbox .profilebox a label span {
   cursor: pointer;

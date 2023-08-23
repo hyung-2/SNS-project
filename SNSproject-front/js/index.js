@@ -121,6 +121,8 @@ function checkLoginUserInfo(){
           localStorage.setItem('userId', data.userId)
           localStorage.setItem('email', data.email)
           localStorage.setItem('token', data.token)
+          localStorage.setItem('author', data._id)
+          localStorage.setItem('imgUrl', data.imgUrl)
           alert(`code:${data.code}, ${data.message}`)
           window.location.href = "./SNSproject-front/html/main.html"
         }
@@ -135,3 +137,7 @@ function checking(name,content){
     alert(`${content}`)
   }
 }
+
+window.addEventListener('load',function(){
+  console.log(window.localStorage.getItem('author'))
+})

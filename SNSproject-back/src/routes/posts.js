@@ -4,6 +4,7 @@ const expressAsyncHandler = require('express-async-handler')
 const { isAuth } = require('../../auth')
 const multer = require('multer')
 const fs = require('fs')
+const path = require('path')
 
 const mongoose = require('mongoose')
 const { Types: {ObjectId} } = mongoose
@@ -13,28 +14,22 @@ const router = express.Router()
 //멀터 설정
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
-    cb(null, 'upload/')
+    cb(null, 'postimgs/')
   },
   filename: function(req, file, cb){
-    cb(null, file.fieldname + '-' + Date.now())
+    cb(null, file.fieldname + '-posts-' + Date.now().valueOf() + path.extname(file.originalname))
   }
 })
 
-// const upload = multer({ storage : storage })
 const upload = multer({ storage : storage})
 
 //테스트
-router.post('/test', isAuth, upload.single('upload'), function( req, res, next){
-  // let file = req.file
-
-  // let result = {
-  //   originalName : file.originalname,
-  //   size : file.size
-  // }
+router.post('/img', isAuth, upload.array('upload'), function( req, res, next){
+  res.send({
+    'uploaded:' : req.file,
+    imgUrl: req.file.path
+  })
   console.log(req.file)
-  console.log(req.body)
-  res.send('uploaded:' + req.file)
-  // res.json(file)
 })
 
 

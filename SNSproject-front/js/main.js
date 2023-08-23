@@ -4,15 +4,17 @@ const myIds = document.querySelectorAll('.myID')
 const logoutBtn = document.querySelector('.logoutbtn')
 const postBtn = document.querySelector('.postbtn')
 const mainCon = document.querySelector('.main')
-const copyCon = document.querySelector('.copy')
 const mainBox = mainCon.querySelector('.main-content')
 const myPost = document.querySelector('.myzeazal span')
 const dropBtn = document.querySelector('.dropdown')
 const imoticonBox = document.querySelector('.imoticon-box')
 const fixMyInfo = document.querySelector('.re-info')
+const imgBoxs = document.querySelectorAll('.imgbox')
 
 //윈도우 로드시
 window.addEventListener('load', function(event){
+  console.log(localStorage.getItem('author'))
+
   //로고 클릭시 최상단으로
   logo.addEventListener('click', (event) => {
     event.preventDefault()
@@ -23,6 +25,17 @@ window.addEventListener('load', function(event){
   myIds.forEach(myid => 
     myid.innerText = `${localStorage.getItem('userId')}`
     )
+
+
+  //사용자 사진 넣기
+  console.log(localStorage.getItem('imgUrl'))
+  imgBoxs.forEach(imgBox => {
+    if(localStorage.getItem('imgUrl') === 'false'){
+      imgBox.firstElementChild.src = '../../SNSproject-back/uploads/profile.png'
+    }else{
+      imgBox.firstElementChild.src = `../../SNSproject-back/${localStorage.getItem('imgUrl')}`
+    }
+  })
   
   let offset = 0
   let loadNum = 10
@@ -37,32 +50,16 @@ window.addEventListener('load', function(event){
     .then(response => response.json())
     .then(datas => {
       console.log(datas)
-      myPost.innerText = `${datas.posts.length}`
-
-      showData(datas)
-      localStorage.setItem('author', datas.posts[0].author)
-
-
       
-
-        // const uploadIn = mainBox.firstElementChild.lastElementChild.lastElementChild
-        // console.log(uploadIn)
-        // const div = document.createElement('div')
-        // uploadIn.append(div)
-        // if(post.imgurl.length !== 0){
-        //   const img = document.createElement('img')
-        //   img.src = post.imgurl
-        //   div.append(img)
-        // }else if(post.vedioUrl.length !==0){
-        //   const video = document.createElement('video')
-        //   vedio.src = post.vedioUrl
-        //   div.append(video)
-        // }
-        // //innerHTML로 하면 createURL이 유효하지않음 근데 이것도..
+      myPost.innerText = `${postCount(datas)}`
+      showData(datas)
 
       function showData(datas){
-        console.log(datas)
-        lodaPostList(datas)
+        if(loadNum > datas.posts.length){
+          loadPostList(datas.posts.length,datas)
+        }else{
+          loadPostList(loadNum,datas)
+        }
         // 무한스크롤 
         window.addEventListener('scroll', (event) => {
           const scrollHeight = Math.max(
@@ -76,14 +73,14 @@ window.addEventListener('load', function(event){
             .then(data => {
               console.log('바닥')
               offset = offset + loadNum
-              lodaPostList(datas)
+              loadPostList(loadNum,datas)
               
             })
           }
         })
       }
-      console.log(datas.posts.length)
-      function lodaPostList(arr){
+      function loadPostList(loadNum, arr){
+        
           for(let i=offset; i<offset+loadNum; i++){
             // console.log(datas.posts[i])
             
@@ -94,7 +91,7 @@ window.addEventListener('load', function(event){
                 <div class="close">${arr.posts[i]._id}</div>
                 <div class="box-profile">
                   <div class="main-profile imgbox">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAIVBMVEXY2Njz8/Pq6urv7+/h4eHb29vo6Oje3t7j4+Pt7e3p6ekmc3lwAAADMElEQVR4nO2bC3KDMAxEMeab+x+4JZQBEkhBlq2NZt8JvGOtPkZUFSGEEEIIIYQQQgghhBBCCCEEnXbo6hjDLzHW3dBan0dEO9ThjfrrxDQHKv60NNZnu0ETz2Q8w+xbpPQfZTyl9NZnvEB7GlS7AIP3SnNFxgR4fHVXdYTQWZ/1A+14XUcII2x4tf+6fE8EVXJXB6qS+zpAldzyx8Jofep3buSrLXC563L9eAWsnrRSHSFg2eRSX3JMbX32Lb1cRwhIHaQg865E69OviJ0+g+P3pAsBupLEC8G5koSUNQOSuBJqyAJGLRnShQzWGp4kRxZKbKXrCMFaw4SCRTBMomARDJMIB5E9CGOJgtcx3J7Yn8wgdCluhGjogMi/FEIhmXBjdjdC3BRENy2Km6bRTRvvZrDyM+q6eXxw8xzk5oHOz5Opm0dsP58V3Hzo8fPpzc3HUD+fp90sDPhZ4fCzVONnzcnN4pmfVUA/y5mVm3XZys8Cs5+V8srNkv+Ek98uJpz8CDPh5NekGRc/ixFCCCHky2mb4TGO8cLkHuM4PoYGsGfph1r0Ih/rAWc2Oexz74DRE59PHre0GE8pvcoiykxnF2O96Ln3nNFGSqMs4ymlfIT9/1Qio/ADS6vojVe6gilMZUXrnFKbKfeeqiWUed5OXti4QgHTZ3THltxv9fnDaiFveOVKukfkTMRJmxr3yaakiM23ZLJ8cR2ZlBjoyKKksD8W1H1ipENdiWQ/QwflrYJidfAd1b2bQn3JMYrdiknCWlFLXSo/VqSgZRNDg8wo2STzPHgFlZnRPLAmNILLNGMtKGQus5K+J73Am5X0PckL9MYlZCW1mJin3oXEFAzikIk0l8BcSOKVAF1I2pVA1JCFlFpiffY9ch0wuXdGnoFVvnPqIf6JCaJd3CJtHQH69z3Sbh4ssuSxZX3ud2Q6oKrhjKwmwllEahI4i0hNAjJSbZGNV9anPkKiA64cTkhKIlijNSNptwCTlixtPawPfcRDIARoyl2RzLtuhACWEVkhcSPE+szHUAgaFIIGhaBBIWhQCBoUggaFoEEhaFAIGhSCBoWgQSFoUAgap8f9Ac1KQOtCVp1TAAAAAElFTkSuQmCC" alt="">
+                    <img src="${isImgUrl(localStorage.getItem('imgUrl'))}" alt="">
                   </div>
                   <div class="link">
                     <a href="/">좋아요</a>
@@ -125,8 +122,6 @@ window.addEventListener('load', function(event){
             mainCon.append(mainBox)
         }
       }
-
-      
     })
     .catch(e => console.log(e))
 
@@ -141,7 +136,6 @@ window.addEventListener('load', function(event){
     }
   })
 
-
   
 })
 
@@ -154,6 +148,7 @@ logoutBtn.addEventListener('click', function() {
       // .then(response => response.json())
       .then(data => {console.log(data)
           window.location.href = "../../index.html"
+          window.localStorage.removeItem('author')
         })
       .catch(e => console.log(e))
 })
@@ -167,7 +162,6 @@ postBtn.addEventListener('click', function(){
   const imgs = textbox.querySelectorAll('img')
   const videos = textbox.querySelectorAll('video')
   console.log(textbox)
-
   if(textbox.childElementCount == 1 && textbox.firstElementChild.innerHTML == '<br>' ){
     alert('빈 게시글입니다.')
   }else{
@@ -178,7 +172,7 @@ postBtn.addEventListener('click', function(){
       <div class="zeazal-box">
         <div class="box-profile">
           <div class="main-profile imgbox">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAIVBMVEXY2Njz8/Pq6urv7+/h4eHb29vo6Oje3t7j4+Pt7e3p6ekmc3lwAAADMElEQVR4nO2bC3KDMAxEMeab+x+4JZQBEkhBlq2NZt8JvGOtPkZUFSGEEEIIIYQQQgghhBBCCCEEnXbo6hjDLzHW3dBan0dEO9ThjfrrxDQHKv60NNZnu0ETz2Q8w+xbpPQfZTyl9NZnvEB7GlS7AIP3SnNFxgR4fHVXdYTQWZ/1A+14XUcII2x4tf+6fE8EVXJXB6qS+zpAldzyx8Jofep3buSrLXC563L9eAWsnrRSHSFg2eRSX3JMbX32Lb1cRwhIHaQg865E69OviJ0+g+P3pAsBupLEC8G5koSUNQOSuBJqyAJGLRnShQzWGp4kRxZKbKXrCMFaw4SCRTBMomARDJMIB5E9CGOJgtcx3J7Yn8wgdCluhGjogMi/FEIhmXBjdjdC3BRENy2Km6bRTRvvZrDyM+q6eXxw8xzk5oHOz5Opm0dsP58V3Hzo8fPpzc3HUD+fp90sDPhZ4fCzVONnzcnN4pmfVUA/y5mVm3XZys8Cs5+V8srNkv+Ek98uJpz8CDPh5NekGRc/ixFCCCHky2mb4TGO8cLkHuM4PoYGsGfph1r0Ih/rAWc2Oexz74DRE59PHre0GE8pvcoiykxnF2O96Ln3nNFGSqMs4ymlfIT9/1Qio/ADS6vojVe6gilMZUXrnFKbKfeeqiWUed5OXti4QgHTZ3THltxv9fnDaiFveOVKukfkTMRJmxr3yaakiM23ZLJ8cR2ZlBjoyKKksD8W1H1ipENdiWQ/QwflrYJidfAd1b2bQn3JMYrdiknCWlFLXSo/VqSgZRNDg8wo2STzPHgFlZnRPLAmNILLNGMtKGQus5K+J73Am5X0PckL9MYlZCW1mJin3oXEFAzikIk0l8BcSOKVAF1I2pVA1JCFlFpiffY9ch0wuXdGnoFVvnPqIf6JCaJd3CJtHQH69z3Sbh4ssuSxZX3ud2Q6oKrhjKwmwllEahI4i0hNAjJSbZGNV9anPkKiA64cTkhKIlijNSNptwCTlixtPawPfcRDIARoyl2RzLtuhACWEVkhcSPE+szHUAgaFIIGhaBBIWhQCBoUggaFoEEhaFAIGhSCBoWgQSFoUAgap8f9Ac1KQOtCVp1TAAAAAElFTkSuQmCC" alt="">
+            <img src="" alt="">
           </div>
           <div class="link">
             <a href="/">좋아요</a>
@@ -203,17 +197,14 @@ postBtn.addEventListener('click', function(){
         <button>OK</button>
       </div>
     `
+    if(textbox.innerHTML.includes('img')){
+      console.log('이미지있다')
+      console.log(textbox.children)
+    }
     mainCon.append(mainBox)
 
    
     //쓴글 서버에 등록   
-    const imgurl =[]
-    imgs.forEach(img => 
-      {imgurl.push(img.src)}
-      )
-
-    const videoUrl = []
-    videos.forEach(video => {videoUrl.push(video.src)})
 
     fetch('http://127.0.0.1:5002/api/posts/',{
       method: 'POST', 
@@ -224,9 +215,6 @@ postBtn.addEventListener('click', function(){
       },
       body: JSON.stringify({
         post: textbox.innerHTML,
-        imgurl: imgurl,
-        vedioUrl: videoUrl,
-        // files: imgurl,
         createPost: `${dateNow()}`
 
         // friendUser: req.body.friendUser,
@@ -235,9 +223,7 @@ postBtn.addEventListener('click', function(){
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        // localStorage.setItem('imgurl', data.newPost.imgurl)
-        // localStorage.setItem('videoUrl', data.newPost.videoUrl)
-        //로컬저장소에  url 저장..인데..흠..안쓸..듯..
+        console.log(data.newPost.post)
       })
       .catch(e => console.log(e))
     
@@ -247,7 +233,7 @@ postBtn.addEventListener('click', function(){
     textbox.focus()
     addfiles()
     lastCaretLine = textbox.firstChild
-    location.reload()
+    // location.reload()
     
 
     // 시간날때 글자수제한 설정
@@ -327,6 +313,7 @@ mainCon.addEventListener('click', function(e){
     //댓글달기
     console.log(e.target.parentElement)
     console.log(e.target.previousElementSibling)
+    console.log(localStorage.getItem('author'))
     const reBox = document.createElement('div')
     reBox.className = 'reaple-box'
     reBox.innerHTML = `
@@ -502,4 +489,22 @@ function getPostList(num) {
   }
 
   return postList
+}
+
+//이미지url검사
+function isImgUrl(f){
+  if(f === 'false'){
+    return '../../SNSproject-back/uploads/profile.png'
+  }else{
+    return `../../SNSproject-back/${localStorage.getItem('imgUrl')}`
+  }
+}
+
+//올린 게시글 수 카운트
+function postCount(f){
+  if(f.code == 404){
+    return 0
+  }else{
+    return f.posts.length
+  }
 }
