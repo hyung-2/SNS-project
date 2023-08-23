@@ -48,7 +48,7 @@ section{
 }
 .my-info .imgbox{
   width: 100px; height: 100px;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 .my-info .infobox{
   text-align: left;
@@ -115,11 +115,12 @@ section{
 }
 .main .main-box .zeazal-box .box-profile .imgbox{
   width: 60px; height: 60px;
+  margin-bottom: .5rem;
 }
 .main .main-box .zeazal-box .box-profile .link{
   display: flex;
   flex-flow: column;
-  margin-bottom: 2rem;
+  margin: .5rem auto;
   justify-content: flex-start;
 }
 .main .main-box .zeazal-box .box-profile .link a{
@@ -207,7 +208,8 @@ section{
   width: 100%;
 }
 .main .main-box .reaple-box h3{
-  flex: 1;
+  /* flex: 1; */
+  margin-right: .5rem;
   font-size: 1rem;
 }
 .main .main-box .reaple-box .reaple-content{

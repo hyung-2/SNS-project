@@ -106,7 +106,7 @@ router.get('/', isAuth, expressAsyncHandler(async (req, res, next) => {
 //사용자프로필 사진 저장
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
-    cb(null, 'uploads/')
+    cb(null, '../uploads/')
   },
   filename: function(req, file, cb){
     cb(null, file.fieldname + '-profile-' + Date.now().valueOf() + path.extname(file.originalname))

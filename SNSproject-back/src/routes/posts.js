@@ -74,7 +74,7 @@ router.get('/', isAuth, expressAsyncHandler(async (req, res, next) => {
 //post 최신순 조회
 router.get('/new', isAuth, expressAsyncHandler(async (req, res, next) => {
   const posts = await Post.aggregate([
-    {$match: {author: req.user._id}},
+    {$match: {author: new ObjectId(req.user._id)}},
     {$sort:{createdAt: -1}}
   ])
   // console.log(posts)
