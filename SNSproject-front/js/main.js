@@ -14,6 +14,8 @@ const imgBoxs = document.querySelectorAll('.imgbox')
 //윈도우 로드시
 window.addEventListener('load', function(event){
   console.log(localStorage.getItem('author'))
+  console.log(localStorage.getItem('imgsrc'))
+  this.localStorage.removeItem('imgsrc')
 
   //로고 클릭시 최상단으로
   logo.addEventListener('click', (event) => {
@@ -40,7 +42,7 @@ window.addEventListener('load', function(event){
   let offset = 0
   let loadNum = 10
   //기존 작성한 게시글 들고오기(최신순)
-  this.fetch('http://127.0.0.1:5002/api/posts/new',{
+  this.fetch('http://127.0.0.1:5103/api/posts/new',{
     method: 'GET',
     headers: {
       'Content-Type':'application/json',
@@ -136,13 +138,152 @@ window.addEventListener('load', function(event){
     }
   })
 
+
+  //글쓰기 버튼 클릭
+  postBtn.addEventListener('click', function(){
+    // console.log(mainCon.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.innerText)
+    let textbox = mainCon.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.lastElementChild
+    console.log(textbox.firstElementChild)
+    const img = textbox.querySelector('img')
+    const videos = textbox.querySelectorAll('video')
+    console.log(textbox)
+    if(textbox.childElementCount == 1 && textbox.firstElementChild.innerHTML == '<br>' ){
+      alert('빈 게시글입니다.')
+    }else{
+      //쓴글 화면에 추가
+      const mainBox = document.createElement('div')
+      mainBox.className = 'main-box'
+      mainBox.innerHTML += `
+        <div class="zeazal-box">
+          <div class="box-profile">
+            <div class="main-profile imgbox">
+              <img src="" alt="">
+            </div>
+            <div class="link">
+              <a href="/">좋아요</a>
+              <a href="/">링크따기</a>
+            </div>
+          </div>
+          <div class="content-box">
+            <div class="id-box">
+              <h3 class="myID">${localStorage.getItem('name')}</h3>
+              <div class="date">${dateNow()}</div>
+              <div class="btn">
+                <button class="repost">수정</button>
+                <button>삭제</button>
+              </div>
+            </div>
+            <div class="main-content" contenteditable="false">${textbox.innerHTML}</div>
+          </div>
+        </div>
+        <div class="reaple-box">
+          <h3 class="myID">${localStorage.getItem('name')}</h3>
+          <div class="reaple-content" contenteditable></div>
+          <button>OK</button>
+        </div>
+      `
+
+      //이미지 src 바꾸면서 서버등록
+      if(textbox.innerHTML.includes('img')){
+        const imgFile = document.getElementById('uploadimg')
+        const formData = new FormData()
+        console.log(img)
+        console.log(img.src)
+        console.log(imgFile.files)
+        formData.append('uploadimg',imgFile.files[0])
+        console.log(formData)
+      
+        fetch('http://127.0.0.1:5103/api/posts/img', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data.imgurl)
+            img.src = `../../SNSproject-back/${data.imgurl}`
+            console.log(img.src)
+
+            fetch('http://127.0.0.1:5103/api/posts/',{
+              method: 'POST', 
+              headers: {
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${localStorage.getItem('token')}`,
+                'enctype' : "multipart/form-data"
+              },
+              body: JSON.stringify({
+                post: textbox.innerHTML,
+                createPost: `${dateNow()}`
+              
+                // friendUser: req.body.friendUser,
+              })
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data)
+                console.log(data.newPost.post)
+              })
+              .catch(e => console.log(e))
+      
   
+
+              textbox.innerText = ''
+              textbox.focus()
+              addfiles()
+              lastCaretLine = textbox.firstChild
+              // location.reload()
+          })
+          .catch(e => console.log(e))
+          // location.reload()
+          // localStorage.removeItem('imgsrc')
+          
+
+          
+      }else{
+      //쓴글 서버에 등록   
+
+      fetch('http://127.0.0.1:5103/api/posts/',{
+        method: 'POST', 
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization':`Bearer ${localStorage.getItem('token')}`,
+          'enctype' : "multipart/form-data"
+        },
+        body: JSON.stringify({
+          post: textbox.innerHTML,
+          createPost: `${dateNow()}`
+
+          // friendUser: req.body.friendUser,
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          console.log(data.newPost.post)
+        })
+        .catch(e => console.log(e))
+
+        textbox.innerText = ''
+        textbox.focus()
+        addfiles()
+        lastCaretLine = textbox.firstChild
+        location.reload()
+
+      // 시간날때 글자수제한 설정
+      
+      
+      // console.log(addfiles.lastCaretLine)
+      }
+      mainCon.append(mainBox)
+    }
+  })
+
+
 })
 
 
 //로그아웃 버튼 클릭
 logoutBtn.addEventListener('click', function() {
-  fetch('http://127.0.0.1:5002/api/users/logout',{
+  fetch('http://127.0.0.1:5103/api/users/logout',{
       method: 'POST', 
     })
       // .then(response => response.json())
@@ -154,94 +295,7 @@ logoutBtn.addEventListener('click', function() {
 })
 
 
-//글쓰기 버튼 클릭
-postBtn.addEventListener('click', function(){
-  // console.log(mainCon.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.innerText)
-  let textbox = mainCon.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.lastElementChild
-  console.log(textbox.firstElementChild)
-  const imgs = textbox.querySelectorAll('img')
-  const videos = textbox.querySelectorAll('video')
-  console.log(textbox)
-  if(textbox.childElementCount == 1 && textbox.firstElementChild.innerHTML == '<br>' ){
-    alert('빈 게시글입니다.')
-  }else{
-    //쓴글 화면에 추가
-    const mainBox = document.createElement('div')
-    mainBox.className = 'main-box'
-    mainBox.innerHTML += `
-      <div class="zeazal-box">
-        <div class="box-profile">
-          <div class="main-profile imgbox">
-            <img src="" alt="">
-          </div>
-          <div class="link">
-            <a href="/">좋아요</a>
-            <a href="/">링크따기</a>
-          </div>
-        </div>
-        <div class="content-box">
-          <div class="id-box">
-            <h3 class="myID">${localStorage.getItem('name')}</h3>
-            <div class="date">${dateNow()}</div>
-            <div class="btn">
-              <button class="repost">수정</button>
-              <button>삭제</button>
-            </div>
-          </div>
-          <div class="main-content" contenteditable="false">${textbox.innerHTML}</div>
-        </div>
-      </div>
-      <div class="reaple-box">
-        <h3 class="myID">${localStorage.getItem('name')}</h3>
-        <div class="reaple-content" contenteditable></div>
-        <button>OK</button>
-      </div>
-    `
-    if(textbox.innerHTML.includes('img')){
-      console.log('이미지있다')
-      console.log(textbox.children)
-    }
-    mainCon.append(mainBox)
 
-   
-    //쓴글 서버에 등록   
-
-    fetch('http://127.0.0.1:5002/api/posts/',{
-      method: 'POST', 
-      headers: {
-        'Content-Type':'application/json',
-        'Authorization':`Bearer ${localStorage.getItem('token')}`,
-        'enctype' : "multipart/form-data"
-      },
-      body: JSON.stringify({
-        post: textbox.innerHTML,
-        createPost: `${dateNow()}`
-
-        // friendUser: req.body.friendUser,
-      })
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        console.log(data.newPost.post)
-      })
-      .catch(e => console.log(e))
-    
- 
-
-    textbox.innerText = ''
-    textbox.focus()
-    addfiles()
-    lastCaretLine = textbox.firstChild
-    // location.reload()
-    
-
-    // 시간날때 글자수제한 설정
-    
-    
-    // console.log(addfiles.lastCaretLine)
-  }
-})
 
 //게시글 수정.삭제.댓글달기
 mainCon.addEventListener('click', function(e){
@@ -267,7 +321,7 @@ mainCon.addEventListener('click', function(e){
       e.target.parentElement.previousElementSibling.innerText = `${e.target.parentElement.previousElementSibling.innerText} (수정됨)`
     }
     //서버에서 수정
-    fetch(`http://127.0.0.1:5002/api/posts/${id}`,{
+    fetch(`http://127.0.0.1:5103/api/posts/${id}`,{
       method: 'PUT',
       headers: {
         'Content-Type':'application/json',
@@ -296,7 +350,7 @@ mainCon.addEventListener('click', function(e){
     if(value == true){
     mainCon.removeChild(e.target.parentElement.parentElement.parentElement.parentElement.parentElement)
     //서버에서도 삭제
-    fetch(`http://127.0.0.1:5002/api/posts/${id}`,{
+    fetch(`http://127.0.0.1:5103/api/posts/${id}`,{
       method: 'DELETE',
       headers: {
         'Content-Type':'application/json',
@@ -333,7 +387,9 @@ mainCon.addEventListener('click', function(e){
 
 })
 
+function nononno(){
 
+}
 
 //다음줄로
 function createNewLine(){
@@ -373,32 +429,8 @@ function addfiles(){
         // console.log(fileType)
         // console.log(lastCaretLine.nodeType)
         if(fileType.includes('image')){
-          //이미지 multer
-          
-          const img = document.createElement('img')
-          //이미지 올리면 바로 multer되면서 새로고침됨 ㅡㅡ
-          const formData = new FormData()
-          console.log(files)
-          console.log(lastCaretLine.previousElementSibling)
-          for(let i=0; i<files.length; i++){
-            console.log(files[i])
-            formData.append('uploadimg',files[i])
-            console.log(formData)
-          }
-          fetch('http://127.0.0.1:5002/api/posts/img', {
-            method: 'POST',
-            body: formData
-          })
-            .then(response => response.json())
-            .then(data => {
-              console.log(data)
-              
-            }
-              )
-            .catch(e => console.log(e))
 
-          e.preventDefault()
-          
+          const img = document.createElement('img')  
           img.src = URL.createObjectURL(file)
           lastCaretLine = addFileToCurrentLine(lastCaretLine, img)
           lastCaretLine.nextSibling = ''

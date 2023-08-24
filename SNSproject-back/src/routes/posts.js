@@ -16,8 +16,9 @@ const storage = multer.diskStorage({
   destination: function(req, file, cb){
     cb(null, 'postimgs/')
   },
+  //destination을 제거해보라는 스택오버플로우답변이있었음 - c드라이브 로컬에 저장되지만 새로고침은 안됨
   filename: function(req, file, cb){
-    cb(null, file.fieldname + '-posts-' + Date.now().valueOf() + path.extname(file.originalname))
+    cb(null, file.fieldname + '_posts_' + Date.now().valueOf() + path.extname(file.originalname))
   }
 })
 

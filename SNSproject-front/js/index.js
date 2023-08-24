@@ -61,7 +61,7 @@ function checkUserInfo(e){
     {
     alert('생년월일을 골라주세요')
   }else{ 
-    fetch('http://127.0.0.1:5002/api/users/register',{
+    fetch('http://127.0.0.1:5103/api/users/register',{
       method: 'POST', 
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
@@ -104,7 +104,7 @@ function checkLoginUserInfo(){
   checking(loginUserPw,'비밀번호를 입력해주세요')
   console.log(loginUserEmail.value)
   if(loginUserEmail.value !== '' && loginUserPw.value !== ''){
-    fetch('http://127.0.0.1:5002/api/users/login',{
+    fetch('http://127.0.0.1:5103/api/users/login',{
       method: 'POST', 
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({

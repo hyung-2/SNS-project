@@ -15,7 +15,7 @@ window.addEventListener('load',function(e){
   // input[0].value = localStorage.getItem('userId')
   // input[1].value = localStorage.getItem('email')
   //placeholder에 내 정보값 넣기
-  fetch(`http://127.0.0.1:5002/api/users/${localStorage.getItem('author')}`, {
+  fetch(`http://127.0.0.1:5103/api/users/${localStorage.getItem('author')}`, {
     method: 'GET',
         headers: {
           'Content-Type':'application/json',
@@ -58,7 +58,7 @@ window.addEventListener('load',function(e){
   //이메일 중복 검사
   checkBtn.addEventListener('click', function(e){
     e.stopPropagation()
-    fetch(`http://127.0.0.1:5002/api/users/`,{
+    fetch(`http://127.0.0.1:5103/api/users/`,{
         method: 'GET',
         headers: {
           'Content-Type':'application/json',
@@ -87,7 +87,7 @@ window.addEventListener('load',function(e){
   
   //로그아웃 버튼 클릭
   logoutBtn.addEventListener('click', function() {
-    fetch('http://127.0.0.1:5002/api/users/logout',{
+    fetch('http://127.0.0.1:5103/api/users/logout',{
         method: 'POST',
       })
         // .then(response => response.json())
@@ -100,7 +100,7 @@ window.addEventListener('load',function(e){
   
   //계정 삭제하기 버튼 클릭
   deleteBtn.addEventListener('click', function(){
-    fetch(`http://127.0.0.1:5002/api/users/${localStorage.getItem('author')}`, {
+    fetch(`http://127.0.0.1:5103/api/users/${localStorage.getItem('author')}`, {
     method: 'DELETE',
         headers: {
           'Content-Type':'application/json',
@@ -140,7 +140,7 @@ window.addEventListener('load',function(e){
         
         if(noBtn.nextElementSibling.firstElementChild.src === 'http://127.0.0.1:5502/SNSproject-back/uploads/profile.png'){
           //기본 프로필 이미지일때
-          fetch(`http://127.0.0.1:5002/api/users/${localStorage.getItem('author')}`, {
+          fetch(`http://127.0.0.1:5103/api/users/${localStorage.getItem('author')}`, {
             method: 'PUT', 
             headers: {
               'Content-Type':'application/json',
@@ -171,7 +171,7 @@ window.addEventListener('load',function(e){
           const formData = new FormData()
           formData.append('userimg',fileInput.files[0])
           console.log(formData)
-          fetch(`http://127.0.0.1:5002/api/users/profile`, {
+          fetch(`http://127.0.0.1:5103/api/users/profile`, {
             method: 'POST',
             // headers: {
             //   'Content-Type':'multipart/form-data',
@@ -184,7 +184,7 @@ window.addEventListener('load',function(e){
               console.log(imgdata)
               console.log(imgdata.imgUrl)
               
-              fetch(`http://127.0.0.1:5002/api/users/${localStorage.getItem('author')}`, {
+              fetch(`http://127.0.0.1:5103/api/users/${localStorage.getItem('author')}`, {
                 method: 'PUT', 
                 headers: {
                   'Content-Type':'application/json',
