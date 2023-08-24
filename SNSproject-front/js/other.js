@@ -17,6 +17,22 @@ const myPageBtn = document.querySelector('.mypage')
 //윈도우 로드시
 window.addEventListener('load', function(event){
 
+  fetch(`http://127.0.0.1:5103/api/users/${localStorage.getItem('author')}`,{
+    method: 'GET',
+    headers: {
+      'Content-Type':'application/json',
+      'Authorization':`Bearer ${localStorage.getItem('token')}`
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      console.log(data.user.followUser.indexOf(localStorage.getItem('othor')) == -1)
+      if(data.user.followUser.indexOf(localStorage.getItem('othor')) == -1){
+        friend.innerText = '친구 끊기'
+      }
+    })
+    .catch(e => console.log(e))
   // console.log(localStorage.getItem('userId'))
   // console.log(localStorage.getItem('author'))
   //로고 클릭시 최상단으로
