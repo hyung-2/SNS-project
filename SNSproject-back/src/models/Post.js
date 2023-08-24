@@ -12,22 +12,6 @@ const postSchema = new Schema({
   post: {
     type: String,
   },
-  imgurl: [{
-    type: String,
-    trim: true,
-  }],
-  vedioUrl:[{
-    type: String,
-    trim: true,
-  }],
-  files: [{
-    type:String,
-    trim: true,
-  }],
-  friendUser: [{
-    type: ObjectId,
-    ref: 'friend'
-  }],
   createdAt: {
     type: Date,
     default: Date.now,

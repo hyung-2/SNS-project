@@ -108,10 +108,12 @@ window.addEventListener('load',function(e){
         }
       })
       .then(data => {
+        const value = confirm('정말 계정을 삭제하시겠습니까?')
+        if(value == true){
         console.log(data)
-        alert(`code:${data.status}, 사용자 정보를 삭제하였습니다.`)
+        alert(`code:${data.status}, 계정을 삭제하였습니다.`)
         window.localStorage.removeItem('author')
-        window.location.href = "../../index.html"
+        window.location.href = "../../index.html"}
       })
       .catch(e => console.log(e))
     })

@@ -15,7 +15,8 @@
     </a>
     <div class="btn">
       <!-- <button class="postbtn">글쓰기</button> -->
-      <button class="logoutbtn">로그아웃</button>
+      <button class="other mypage">My 재잘</button>
+      <button class="other logoutbtn">로그아웃</button>
     </div>
   </header>
   <div class="container">
@@ -26,13 +27,12 @@
       </div>
       <div class="infobox">
         <div class="myzeazal">올린 게시글 수 <span></span></div>
-        <div class="myfriend">친구 수 <sapn></sapn></div>
-        <div class="re-info">내 정보 수정</div>
-        <div class="find-friend">친구 찾기</div>
+        <div class="myfriend">친구 수</div>
+        <div class="find-friend">친구 맺기</div>
       </div>
     </section>
     <section class="main">
-      <div class="main-box original">
+      <!-- <div class="main-box original">
         <div class="zeazal-box">
           <div class="box-profile">
             <div class="main-profile imgbox">
@@ -48,7 +48,7 @@
               <h3 class="myID">아이디</h3>
               <div class="tools">
                 <a href="#"><label for="uploadimg"><span class="material-symbols-outlined">add_photo_alternate</span></label></a>
-                <!-- <a href="#"><label for="uploadvideo"><span class="material-symbols-outlined">video_call</span></label></a> -->
+                <a href="#"><label for="uploadvideo"><span class="material-symbols-outlined">video_call</span></label></a>
                 <a href="#"><span class="material-symbols-outlined dropdown">sentiment_satisfied</span></a>
                 <div class="imoticon-box close">
                   <span>🥰</span>
@@ -75,7 +75,7 @@
               </div>
               <div class="btn">
                 <button class="postbtn">글쓰기</button>
-                <!-- <button>삭제</button> -->
+                <button>삭제</button>
               </div>
             </div>
             <div class="main-content boxline" contenteditable>
@@ -83,32 +83,10 @@
             </div>
           </div>
         </div>
-        <!-- <div class="reaple-box">
-          <h3 class="myID">아이디</h3>
-          <div class="reaple-content" contenteditable></div>
-          <button>OK</button>
-        </div> -->
-      </div>
-      <!-- <div class="main copy"></div> -->
-      <!-- 최신순 정렬하면서 필요없어짐 -->
+
+      </div> -->
+
     </section>
-    
-    <!-- <section class="friend">
-      <h4>친구의 최신 글</h4>
-      <div class="friend-profile">
-        <div class="friend-imgbox">
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAIVBMVEXY2Njz8/Pq6urv7+/h4eHb29vo6Oje3t7j4+Pt7e3p6ekmc3lwAAADMElEQVR4nO2bC3KDMAxEMeab+x+4JZQBEkhBlq2NZt8JvGOtPkZUFSGEEEIIIYQQQgghhBBCCCEEnXbo6hjDLzHW3dBan0dEO9ThjfrrxDQHKv60NNZnu0ETz2Q8w+xbpPQfZTyl9NZnvEB7GlS7AIP3SnNFxgR4fHVXdYTQWZ/1A+14XUcII2x4tf+6fE8EVXJXB6qS+zpAldzyx8Jofep3buSrLXC563L9eAWsnrRSHSFg2eRSX3JMbX32Lb1cRwhIHaQg865E69OviJ0+g+P3pAsBupLEC8G5koSUNQOSuBJqyAJGLRnShQzWGp4kRxZKbKXrCMFaw4SCRTBMomARDJMIB5E9CGOJgtcx3J7Yn8wgdCluhGjogMi/FEIhmXBjdjdC3BRENy2Km6bRTRvvZrDyM+q6eXxw8xzk5oHOz5Opm0dsP58V3Hzo8fPpzc3HUD+fp90sDPhZ4fCzVONnzcnN4pmfVUA/y5mVm3XZys8Cs5+V8srNkv+Ek98uJpz8CDPh5NekGRc/ixFCCCHky2mb4TGO8cLkHuM4PoYGsGfph1r0Ih/rAWc2Oexz74DRE59PHre0GE8pvcoiykxnF2O96Ln3nNFGSqMs4ymlfIT9/1Qio/ADS6vojVe6gilMZUXrnFKbKfeeqiWUed5OXti4QgHTZ3THltxv9fnDaiFveOVKukfkTMRJmxr3yaakiM23ZLJ8cR2ZlBjoyKKksD8W1H1ipENdiWQ/QwflrYJidfAd1b2bQn3JMYrdiknCWlFLXSo/VqSgZRNDg8wo2STzPHgFlZnRPLAmNILLNGMtKGQus5K+J73Am5X0PckL9MYlZCW1mJin3oXEFAzikIk0l8BcSOKVAF1I2pVA1JCFlFpiffY9ch0wuXdGnoFVvnPqIf6JCaJd3CJtHQH69z3Sbh4ssuSxZX3ud2Q6oKrhjKwmwllEahI4i0hNAjJSbZGNV9anPkKiA64cTkhKIlijNSNptwCTlixtPawPfcRDIARoyl2RzLtuhACWEVkhcSPE+szHUAgaFIIGhaBBIWhQCBoUggaFoEEhaFAIGhSCBoWgQSFoUAgap8f9Ac1KQOtCVp1TAAAAAElFTkSuQmCC" alt="">
-        </div>
-        <h3>아이디</h3>
-      </div>
-      <div class="friend-profile">
-        <div class="friend-imgbox">
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAIVBMVEXY2Njz8/Pq6urv7+/h4eHb29vo6Oje3t7j4+Pt7e3p6ekmc3lwAAADMElEQVR4nO2bC3KDMAxEMeab+x+4JZQBEkhBlq2NZt8JvGOtPkZUFSGEEEIIIYQQQgghhBBCCCEEnXbo6hjDLzHW3dBan0dEO9ThjfrrxDQHKv60NNZnu0ETz2Q8w+xbpPQfZTyl9NZnvEB7GlS7AIP3SnNFxgR4fHVXdYTQWZ/1A+14XUcII2x4tf+6fE8EVXJXB6qS+zpAldzyx8Jofep3buSrLXC563L9eAWsnrRSHSFg2eRSX3JMbX32Lb1cRwhIHaQg865E69OviJ0+g+P3pAsBupLEC8G5koSUNQOSuBJqyAJGLRnShQzWGp4kRxZKbKXrCMFaw4SCRTBMomARDJMIB5E9CGOJgtcx3J7Yn8wgdCluhGjogMi/FEIhmXBjdjdC3BRENy2Km6bRTRvvZrDyM+q6eXxw8xzk5oHOz5Opm0dsP58V3Hzo8fPpzc3HUD+fp90sDPhZ4fCzVONnzcnN4pmfVUA/y5mVm3XZys8Cs5+V8srNkv+Ek98uJpz8CDPh5NekGRc/ixFCCCHky2mb4TGO8cLkHuM4PoYGsGfph1r0Ih/rAWc2Oexz74DRE59PHre0GE8pvcoiykxnF2O96Ln3nNFGSqMs4ymlfIT9/1Qio/ADS6vojVe6gilMZUXrnFKbKfeeqiWUed5OXti4QgHTZ3THltxv9fnDaiFveOVKukfkTMRJmxr3yaakiM23ZLJ8cR2ZlBjoyKKksD8W1H1ipENdiWQ/QwflrYJidfAd1b2bQn3JMYrdiknCWlFLXSo/VqSgZRNDg8wo2STzPHgFlZnRPLAmNILLNGMtKGQus5K+J73Am5X0PckL9MYlZCW1mJin3oXEFAzikIk0l8BcSOKVAF1I2pVA1JCFlFpiffY9ch0wuXdGnoFVvnPqIf6JCaJd3CJtHQH69z3Sbh4ssuSxZX3ud2Q6oKrhjKwmwllEahI4i0hNAjJSbZGNV9anPkKiA64cTkhKIlijNSNptwCTlixtPawPfcRDIARoyl2RzLtuhACWEVkhcSPE+szHUAgaFIIGhaBBIWhQCBoUggaFoEEhaFAIGhSCBoWgQSFoUAgap8f9Ac1KQOtCVp1TAAAAAElFTkSuQmCC" alt="">
-        </div>
-        <h3>아이디</h3>
-      </div>
-    </section> -->
-  </div>
 
   <form class="upload close" enctype="multipart/form-data" onsubmit="return false;">
     <input type="file" id="uploadimg" name="uploadimg" accept="image/*">
@@ -116,6 +94,6 @@
   </form>
 
   <script src="../js/scroll.js"></script>
-  <script src="../js/main.js"></script>
+  <script src="../js/other.js"></script>
 </body>
 </html>

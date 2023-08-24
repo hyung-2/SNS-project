@@ -5,16 +5,36 @@ const logoutBtn = document.querySelector('.logoutbtn')
 const postBtn = document.querySelector('.postbtn')
 const mainCon = document.querySelector('.main')
 const mainBox = mainCon.querySelector('.main-content')
-const myPost = document.querySelector('.myzeazal span')
+const infoBox = document.querySelector('.infobox')
 const dropBtn = document.querySelector('.dropdown')
 const imoticonBox = document.querySelector('.imoticon-box')
 const fixMyInfo = document.querySelector('.re-info')
 const imgBoxs = document.querySelectorAll('.imgbox')
+const findF = document.querySelector('.find-friend')
 
 //윈도우 로드시
 window.addEventListener('load', function(event){
   console.log(localStorage.getItem('author'))
-  console.log(localStorage.getItem('imgsrc'))
+  //내 정보 조회
+  fetch(`http://127.0.0.1:5103/api/users/${localStorage.getItem('author')}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type':'application/json',
+      'Authorization':`Bearer ${localStorage.getItem('token')}`
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      const friendCount = infoBox.firstElementChild.nextElementSibling.lastElementChild 
+      if(friendCount){
+        friendCount.innerText = data.user.friendUser.length
+      }
+    })
+    .catch(e => console.log(e))
+
+
+
   this.localStorage.removeItem('imgsrc')
 
   //로고 클릭시 최상단으로
@@ -30,7 +50,6 @@ window.addEventListener('load', function(event){
 
 
   //사용자 사진 넣기
-  console.log(localStorage.getItem('imgUrl'))
   imgBoxs.forEach(imgBox => {
     if(localStorage.getItem('imgUrl') === 'false'){
       imgBox.firstElementChild.src = '../../SNSproject-back/uploads/profile.png'
@@ -53,7 +72,7 @@ window.addEventListener('load', function(event){
     .then(datas => {
       console.log(datas)
       
-      myPost.innerText = `${postCount(datas)}`
+      infoBox.firstElementChild.lastElementChild.innerText = `${postCount(datas)}`
       showData(datas)
 
       function showData(datas){
@@ -145,7 +164,7 @@ window.addEventListener('load', function(event){
     let textbox = mainCon.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.lastElementChild
     console.log(textbox.firstElementChild)
     const img = textbox.querySelector('img')
-    const videos = textbox.querySelectorAll('video')
+    const video = textbox.querySelector('video')
     console.log(textbox)
     if(textbox.childElementCount == 1 && textbox.firstElementChild.innerHTML == '<br>' ){
       alert('빈 게시글입니다.')
@@ -183,8 +202,8 @@ window.addEventListener('load', function(event){
         </div>
       `
 
-      //이미지 src 바꾸면서 서버등록
       if(textbox.innerHTML.includes('img')){
+        //이미지 src 바꾸면서 서버등록
         const imgFile = document.getElementById('uploadimg')
         const formData = new FormData()
         console.log(img)
@@ -213,7 +232,6 @@ window.addEventListener('load', function(event){
               body: JSON.stringify({
                 post: textbox.innerHTML,
                 createPost: `${dateNow()}`
-              
                 // friendUser: req.body.friendUser,
               })
             })
@@ -223,23 +241,19 @@ window.addEventListener('load', function(event){
                 console.log(data.newPost.post)
               })
               .catch(e => console.log(e))
-      
-  
 
               textbox.innerText = ''
               textbox.focus()
               addfiles()
               lastCaretLine = textbox.firstChild
-              // location.reload()
           })
           .catch(e => console.log(e))
-          // location.reload()
-          // localStorage.removeItem('imgsrc')
-          
-
-          
+          location.reload()
+      // }else if(textbox.innerHTML.includes('video')){
+        //비디오 src 바꾸면서 서버등록 - 갑자기 비디오파일 안올라가서 포기
+        //이미지에 쓴거 가져와서 복붙해서 바꾸면됨
       }else{
-      //쓴글 서버에 등록   
+      //쓴글 서버에 등록(글만 존재) 
 
       fetch('http://127.0.0.1:5103/api/posts/',{
         method: 'POST', 
@@ -487,7 +501,10 @@ fixMyInfo.addEventListener('click', function(){
   window.location.href = "./userInfo.html"
 })
 
-
+//친구찾기
+findF.addEventListener('click', function(){
+  window.location.href = './search.html'
+})
 
 
 
@@ -500,53 +517,11 @@ fixMyInfo.addEventListener('click', function(){
 function dateNow(){
   const date = new Date()
   let dateFormat = (`${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`)
-  // if(date.getMinutes().length == 1){
-  //   (`${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일 ${date.getHours()}:0${date.getMinutes()}`)
-  // }else{
-  //   (`${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일 ${date.getHours()}:${date.getMinutes()}`)
-  // }
+
   return dateFormat
 }
 
-function getPostList(num) {
-  let postList = ''
-  for(let i=0; i<num; i++){
-    postList += `
-    <div class="zeazal-box">
-      <div class="close">${post._id}</div>
-      <div class="box-profile">
-        <div class="main-profile imgbox">
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAIVBMVEXY2Njz8/Pq6urv7+/h4eHb29vo6Oje3t7j4+Pt7e3p6ekmc3lwAAADMElEQVR4nO2bC3KDMAxEMeab+x+4JZQBEkhBlq2NZt8JvGOtPkZUFSGEEEIIIYQQQgghhBBCCCEEnXbo6hjDLzHW3dBan0dEO9ThjfrrxDQHKv60NNZnu0ETz2Q8w+xbpPQfZTyl9NZnvEB7GlS7AIP3SnNFxgR4fHVXdYTQWZ/1A+14XUcII2x4tf+6fE8EVXJXB6qS+zpAldzyx8Jofep3buSrLXC563L9eAWsnrRSHSFg2eRSX3JMbX32Lb1cRwhIHaQg865E69OviJ0+g+P3pAsBupLEC8G5koSUNQOSuBJqyAJGLRnShQzWGp4kRxZKbKXrCMFaw4SCRTBMomARDJMIB5E9CGOJgtcx3J7Yn8wgdCluhGjogMi/FEIhmXBjdjdC3BRENy2Km6bRTRvvZrDyM+q6eXxw8xzk5oHOz5Opm0dsP58V3Hzo8fPpzc3HUD+fp90sDPhZ4fCzVONnzcnN4pmfVUA/y5mVm3XZys8Cs5+V8srNkv+Ek98uJpz8CDPh5NekGRc/ixFCCCHky2mb4TGO8cLkHuM4PoYGsGfph1r0Ih/rAWc2Oexz74DRE59PHre0GE8pvcoiykxnF2O96Ln3nNFGSqMs4ymlfIT9/1Qio/ADS6vojVe6gilMZUXrnFKbKfeeqiWUed5OXti4QgHTZ3THltxv9fnDaiFveOVKukfkTMRJmxr3yaakiM23ZLJ8cR2ZlBjoyKKksD8W1H1ipENdiWQ/QwflrYJidfAd1b2bQn3JMYrdiknCWlFLXSo/VqSgZRNDg8wo2STzPHgFlZnRPLAmNILLNGMtKGQus5K+J73Am5X0PckL9MYlZCW1mJin3oXEFAzikIk0l8BcSOKVAF1I2pVA1JCFlFpiffY9ch0wuXdGnoFVvnPqIf6JCaJd3CJtHQH69z3Sbh4ssuSxZX3ud2Q6oKrhjKwmwllEahI4i0hNAjJSbZGNV9anPkKiA64cTkhKIlijNSNptwCTlixtPawPfcRDIARoyl2RzLtuhACWEVkhcSPE+szHUAgaFIIGhaBBIWhQCBoUggaFoEEhaFAIGhSCBoWgQSFoUAgap8f9Ac1KQOtCVp1TAAAAAElFTkSuQmCC" alt="">
-        </div>
-        <div class="link">
-          <a href="/">좋아요</a>
-          <a href="/">링크따기</a>
-        </div>
-      </div>
-      <div class="content-box">
-        <div class="id-box">
-          <h3 class="myID">${post.author.userId}</h3>
-          <div class="date">${post.createPost}</div>
-          <div class="btn">
-            <button class="repost">수정</button>
-            <button>삭제</button>
-          </div>
-        </div>
-        <div class="main-content" contenteditable="false">
-          ${post.post}
-        </div>
-      </div>
-    </div>
-    <div class="reaple-box">
-      <h3 class="myID">${post.author.userId}</h3>
-      <div class="reaple-content" contenteditable></div>
-      <button>OK</button>
-    </div>
-  ` 
-  }
 
-  return postList
-}
 
 //이미지url검사
 function isImgUrl(f){

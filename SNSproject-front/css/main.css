@@ -57,18 +57,22 @@ section{
   width: 100%;
 }
 .my-info .infobox > div{
-  margin-bottom: .2rem;
+  margin-bottom: .3rem;
 }
 .my-info .infobox .myzeazal{
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.my-info .infobox .re-info{
+.my-info .infobox .re-info,
+.my-info .infobox .find-friend,
+.my-info .infobox .myfriend{
   cursor: pointer;
   transition: .3s;
 }
-.my-info .infobox .re-info:hover{
+.my-info .infobox .re-info:hover,
+.my-info .infobox .find-friend:hover,
+.my-info .infobox .myfriend:hover{
   letter-spacing: .02rem;
   font-weight: bold;
 }
@@ -313,6 +317,11 @@ section{
   flex: 1;
   line-height: 20px;
 }
+
+.other{
+  height: 32px;
+}
+
 
 .close{
   display: none;

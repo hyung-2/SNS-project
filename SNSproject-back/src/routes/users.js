@@ -42,12 +42,12 @@ router.post('/login', expressAsyncHandler(async (req, res, next) => {
   if(!loginUser){
     res.status(401).json({code: 401, message: 'email이나 비밀번호를 확인해주세요.'})
   }else{
-    const { userId, email, isAdmin, createdAt, _id, imgUrl } = loginUser
+    const { userId, email, isAdmin, createdAt, _id, imgUrl, followUser } = loginUser
     res.json({
       code: 200,
       message: '로그인에 성공하였습니다!',
       token: makeToken(loginUser),
-      userId, email, isAdmin, createdAt, _id, imgUrl
+      userId, email, isAdmin, createdAt, _id, imgUrl, followUser
     })
   }
 }))
@@ -79,16 +79,17 @@ router.put('/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
     user.password = req.body.password || user.password
     user.isAdmin = req.body.isAdmin || user.isAdmin
     user.imgUrl = req.body.imgUrl || user.imgUrl
+    user.followUser = req.body.followUser || user.followUser
     user.lastModifiedAt = new Date()
   }
 
   const updateUser = await user.save()
-  const { userId, birth, isAdmin, imgUrl } = updateUser
+  const { userId, birth, isAdmin, imgUrl, followUser } = updateUser
   res.json({
     code: 200,
     message: '사용자 정보 변경에 성공하였습니다.',
     token: makeToken(updateUser),
-    userId, birth, isAdmin, imgUrl
+    userId, birth, isAdmin, imgUrl, followUser
   })
 }))
 
@@ -96,6 +97,16 @@ router.put('/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
 router.get('/', isAuth, expressAsyncHandler(async (req, res, next) => {
   const user = await User.find({})
   if(user.length === 0){
+    res.status(404).json({code: 404, message: '사용자를 찾을 수 없습니다.'})
+  }else{
+    res.json({code: 200, user})
+  }
+}))
+
+//특정 사용자 검색
+router.get('/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
+  const user = await User.find({userId: req.params._id})
+  if(!user){
     res.status(404).json({code: 404, message: '사용자를 찾을 수 없습니다.'})
   }else{
     res.json({code: 200, user})
