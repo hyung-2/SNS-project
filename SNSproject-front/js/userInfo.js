@@ -100,8 +100,20 @@ window.addEventListener('load',function(e){
   
   //계정 삭제하기 버튼 클릭
   deleteBtn.addEventListener('click', function(){
+
+    fetch(`http://127.0.0.1:5103/api/users/nouser/${localStorage.getItem('author')}`,{
+        method: 'DELETE',
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization':`Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then(data => console.log(data))
+      .catch(e => console.log(e))
+
+
     fetch(`http://127.0.0.1:5103/api/users/${localStorage.getItem('author')}`, {
-    method: 'DELETE',
+        method: 'DELETE',
         headers: {
           'Content-Type':'application/json',
           'Authorization':`Bearer ${localStorage.getItem('token')}`
@@ -113,9 +125,12 @@ window.addEventListener('load',function(e){
         console.log(data)
         alert(`code:${data.status}, 계정을 삭제하였습니다.`)
         window.localStorage.removeItem('author')
-        window.location.href = "../../index.html"}
+        // window.location.href = "../../index.html"
+      }
       })
       .catch(e => console.log(e))
+
+      
     })
 
 

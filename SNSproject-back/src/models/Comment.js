@@ -3,33 +3,30 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 const { Types: { ObjectId }} = Schema
 
-const postSchema = new Schema({
+const commentSchema = new Schema({
   author: {
     type: ObjectId,
     rquired: true,
     ref: 'User',
   },
   post: {
+    type: ObjectId,
+    rquired: true,
+    ref: 'Post',
+  },
+  comment: {
     type: String,
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  likeUser: [{
-    type: ObjectId,
-    ref: 'User',
-  }],
   lastModifiedAt: {
     type: Date,
     default: Date.now,
-  },
-  createPost:{
-    type: String,
-    // default: Date.now,
   }
 })
 
-const Post = mongoose.model('Post', postSchema)
+const comment = mongoose.model('comment', commentSchema)
 
-module.exports = Post
+module.exports = comment

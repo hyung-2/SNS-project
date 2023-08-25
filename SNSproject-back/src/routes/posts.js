@@ -44,7 +44,7 @@ router.post('/video', upload.single('uploadvideo'), function(req, res){
 
 
 //post 등록
-router.post('/', isAuth, upload.single('upload'), expressAsyncHandler(async (req, res, next) => {
+router.post('/', isAuth, expressAsyncHandler(async (req, res, next) => {
     const post = new Post({
       author: req.user._id,
       post: req.body.post,
@@ -140,6 +140,41 @@ router.put('/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
   }
 }))
 
+//좋아요누르기
+router.put('/like/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
+  const post = await Post.updateOne(
+    {_id: req.params.id},
+    {$push: {likeUser: req.body.likeUser}}
+  )
+  if(!post){
+    res.status(404).json({code: 404, message: 'Post를 찾을 수 없습니다.'})
+  }else{
+    console.log(req.body)
+    res.json({
+      code: 200,
+      message: '좋아요 버튼 꾹',
+      post
+    })
+  }
+}))
+
+//좋아요 취소
+router.put('/unlike/:id', isAuth, expressAsyncHandler(async(req, res, next) => {
+  const post = await Post.updateOne(
+    {_id: req.params.id},
+    {$pull: {likeUser: req.body.likeUser}}
+  )
+  if(!post){
+    res.status(404).json({code: 404, message: 'Post를 찾을 수 없습니다.'})
+  }else{
+    console.log(req.body)
+    res.json({
+      code:200,
+      message: '좋아요 버튼 취소',
+      post
+    })
+  }
+}))
 
 
 module.exports = router

@@ -6,6 +6,9 @@ const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
 
+const mongoose = require('mongoose')
+const { Types: {ObjectId} } = mongoose
+
 const router = express.Router()
 
 //회원가입
@@ -79,7 +82,6 @@ router.put('/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
     user.password = req.body.password || user.password
     user.isAdmin = req.body.isAdmin || user.isAdmin
     user.imgUrl = req.body.imgUrl || user.imgUrl
-    user.followUser = req.body.followUser || user.followUser
     user.lastModifiedAt = new Date()
   }
 
@@ -91,6 +93,60 @@ router.put('/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
     token: makeToken(updateUser),
     userId, birth, isAdmin, imgUrl, followUser
   })
+}))
+
+//유저 팔로우
+router.put('/follow/:id', isAuth, expressAsyncHandler(async(req, res, next) => {
+  const user = await User.updateOne(
+    {_id: req.params.id},
+    {$push: {followUser: req.body.followUser}}
+  )
+  if(!user){
+    res.status(404).json({code: 404, message: '사용자를 찾을 수 없습니다.'})
+  }else{
+    console.log(req.body)
+    res.json({
+      code:200,
+      message: 'follow 성공',
+      user
+    })
+  }
+}))
+
+//팔로우 끊기
+router.put('/unfollow/:id', isAuth, expressAsyncHandler(async(req, res, next) => {
+  const user = await User.updateOne(
+    {_id: req.params.id},
+    {$pull: {followUser: req.body.followUser}}
+  )
+  if(!user){
+    res.status(404).json({code: 404, message: '사용자를 찾을 수 없습니다.'})
+  }else{
+    console.log(req.body)
+    res.json({
+      code:200,
+      message: 'unfollow 성공',
+      user
+    })
+  }
+}))
+
+//탈퇴한 사용자 팔로우목록에서 삭제
+router.put('/nouser/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
+  const user = await User.updateMany(
+    {},
+    {$pull: {followUser: req.params.id}}
+  )
+  if(!user){
+    res.status(404).json({code: 404, message: '사용자를 찾을 수 없습니다.'})
+  }else{
+    console.log(req.body)
+    res.json({
+      code:200,
+      message: '탈퇴한 유저 삭제 성공',
+      user
+    })
+  }
 }))
 
 //전체 사용자 이메일 조회

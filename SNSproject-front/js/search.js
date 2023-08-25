@@ -1,7 +1,9 @@
 const logoutBtn = document.querySelector('.logoutbtn')
 const searchBtn = document.querySelector('.searchbtn')
 const resultCon = document.querySelector('.result-container')
-  
+const myPageBtn = document.querySelector('.mypage')
+
+
 //검색버튼 클릭
 searchBtn.addEventListener('click', function(e){
   console.log(searchBtn.previousElementSibling.value)
@@ -77,10 +79,10 @@ resultCon.addEventListener('click', function(e){
   }
 })
   
-  
-  
-  
-  
+//내 메인페이지로 돌아가기
+myPageBtn.addEventListener('click',function(){
+  window.location.href = "./main.html"
+})
   
   
   
