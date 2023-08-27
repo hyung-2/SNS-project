@@ -135,7 +135,7 @@ router.put('/unfollow/:id', isAuth, expressAsyncHandler(async(req, res, next) =>
 router.put('/nouser/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
   const user = await User.updateMany(
     {},
-    {$pull: {followUser: req.params.id}}
+    {$pull: {followUser: new ObjectId(req.params.id)}}
   )
   if(!user){
     res.status(404).json({code: 404, message: '사용자를 찾을 수 없습니다.'})

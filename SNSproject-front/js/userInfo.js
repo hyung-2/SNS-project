@@ -101,34 +101,42 @@ window.addEventListener('load',function(e){
   //계정 삭제하기 버튼 클릭
   deleteBtn.addEventListener('click', function(){
 
-    fetch(`http://127.0.0.1:5103/api/users/nouser/${localStorage.getItem('author')}`,{
-        method: 'DELETE',
-        headers: {
-          'Content-Type':'application/json',
-          'Authorization':`Bearer ${localStorage.getItem('token')}`
-        }
-      })
-      .then(data => console.log(data))
-      .catch(e => console.log(e))
-
-
-    fetch(`http://127.0.0.1:5103/api/users/${localStorage.getItem('author')}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type':'application/json',
-          'Authorization':`Bearer ${localStorage.getItem('token')}`
-        }
-      })
-      .then(data => {
-        const value = confirm('정말 계정을 삭제하시겠습니까?')
-        if(value == true){
-        console.log(data)
-        alert(`code:${data.status}, 계정을 삭제하였습니다.`)
-        window.localStorage.removeItem('author')
-        // window.location.href = "../../index.html"
+    //팔로우에서 삭제
+    if(input[2].value !== localStorage.getItem('pw')){
+      alert('현재 비밀번호를 확인해주세요')
+    }else{
+      const value = confirm('정말 계정을 삭제하시겠습니까?')
+      if(value == true){
+        fetch(`http://127.0.0.1:5103/api/users/nouser/${localStorage.getItem('author')}`,{
+            method: 'PUT',
+            headers: {
+              'Content-Type':'application/json',
+              'Authorization':`Bearer ${localStorage.getItem('token')}`
+            }
+          })
+          .then(data => console.log(data))
+          .catch(e => console.log(e))
+    
+    
+        fetch(`http://127.0.0.1:5103/api/users/${localStorage.getItem('author')}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type':'application/json',
+              'Authorization':`Bearer ${localStorage.getItem('token')}`
+            }
+          })
+          .then(data => {
+            console.log(data)
+            alert(`code:${data.status}, 계정을 삭제하였습니다.`)
+            window.localStorage.removeItem('author')
+            window.location.href = "../../index.html"
+          
+          })
+          .catch(e => console.log(e))
+  
       }
-      })
-      .catch(e => console.log(e))
+
+    }
 
       
     })
