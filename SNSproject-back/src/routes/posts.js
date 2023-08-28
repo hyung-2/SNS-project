@@ -18,29 +18,38 @@ const storage = multer.diskStorage({
   },
   //destination을 제거해보라는 스택오버플로우답변이있었음 - c드라이브 로컬에 저장되지만 새로고침은 안됨
   filename: function(req, file, cb){
-    cb(null, file.fieldname + '_posts_' + Date.now().valueOf() + path.extname(file.originalname))
+    function randomNum(min,max){
+      let random = Math.floor(Math.random()*(max - min + 1));
+      return random
+
+    }
+    cb(null, file.fieldname + '_posts_' + Date.now().valueOf() + randomNum(10,99) + path.extname(file.originalname))
   }
 })
 
 let upload = multer({ storage : storage})
 
-//이미지 multer(단일)
-router.post('/img', upload.single('uploadimg'), function( req, res){
+//이미지 multer
+router.post('/img', upload.array('uploadimg', 2), function( req, res){
+  let imgArr = new Array()
+  for(let i=0; i< req.files.length; i++){
+    imgArr.push(`${req.files[i].path}`)
+    console.log(imgArr[i])
+  }
   res.send({
-    'uploaded:' : req.file,
-    imgurl: req.file.path
+    imgurl: imgArr,
   })
-  console.log(req.file)
+  console.log(req.files , req.files.length)
 })
 
 //비디오 multer(단일)
-router.post('/video', upload.single('uploadvideo'), function(req, res){
-  res.send({
-    'uploaded:' : req.file,
-    videourl: req.file.path
-  })
-  console.log(req.file)
-})
+// router.post('/video', upload.single('uploadvideo'), function(req, res){
+//   res.send({
+//     'uploaded:' : req.file,
+//     videourl: req.file.path
+//   })
+//   console.log(req.file)
+// })
 
 
 //post 등록

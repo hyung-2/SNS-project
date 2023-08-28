@@ -14,7 +14,7 @@ router.get('/:user/:id', expressAsyncHandler(async (req, res, next) => {
     // author: req.params.user,
     post: req.params.id
   }).populate('author')
-  if(comment.length === 0){
+  if(comment.lenght === 0){
     res.status(404).json({code: 404, message: '댓글이 없습니다.'})
   }else{
     res.json({code: 200, comment})
