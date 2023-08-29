@@ -53,3 +53,18 @@
 .other{
   height: 32px;
 }
+
+.nofollow{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto;
+  /* border: 1px solid var(--box-color); */
+  padding: 1.5rem 3rem;
+  border-radius: 2rem;
+  box-shadow: 0 0 1rem var(--box-color);
+  /* cursor: pointer; */
+  /* transition: .2s; */
+}
+
+/* 반응형 */

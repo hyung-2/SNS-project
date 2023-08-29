@@ -2,6 +2,7 @@ const scroller = new Scroller(false)
 const resultCon = document.querySelector('.result-container')
 const myPageBtn = document.querySelector('.mypage')
 const logo = document.querySelector('.logo')
+const logoutBtn = document.querySelector('.logoutbtn')
 
 window.addEventListener('load', function(){
   console.log(localStorage.getItem('author'))
@@ -36,7 +37,7 @@ resultCon.addEventListener('click', function(e){
 
   if(e.target !== resultCon){
     e.stopPropagation()
-    console.log(e.target)
+    // console.log(e.target)
     userBoxs.forEach(userbox => {
       if(userbox.contains(e.target)){
         console.log(userbox.firstElementChild.innerText)
@@ -66,7 +67,7 @@ function fetching(f){
         console.log(data)
         if(data.user.followUser.length === 0){
           const userBox = document.createElement('div')
-                  userBox.className = 'userBox'
+                  userBox.className = 'nofollow'
                   userBox.innerHTML = `팔로우중인 사용자가 없습니다.`
           resultCon.append(userBox)
         }else{
@@ -120,3 +121,18 @@ function fetching(f){
         }
         })
 }
+
+
+//로그아웃 버튼 클릭
+logoutBtn.addEventListener('click', function() {
+  fetch('http://127.0.0.1:5103/api/users/logout',{
+      method: 'POST',
+    })
+      // .then(response => response.json())
+      .then(data => {console.log(data)
+        window.location.href = "../../index.html"
+        window.localStorage.removeItem('author')
+        })
+      .catch(e => console.log(e))
+})
+  

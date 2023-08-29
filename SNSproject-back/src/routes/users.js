@@ -29,7 +29,7 @@ router.post('/register', expressAsyncHandler(async (req, res, next) => {
     res.json({
       code: 200,
       message: '성공적으로 계정을 생성했습니다.',
-      token: makeToken(newUser), //추후 토큰생성해주기
+      token: makeToken(newUser), 
       userId, email, isAdmin, createdAt
     })
   }
@@ -153,16 +153,6 @@ router.put('/nouser/:id', isAuth, expressAsyncHandler(async (req, res, next) => 
 router.get('/', isAuth, expressAsyncHandler(async (req, res, next) => {
   const user = await User.find({})
   if(user.length === 0){
-    res.status(404).json({code: 404, message: '사용자를 찾을 수 없습니다.'})
-  }else{
-    res.json({code: 200, user})
-  }
-}))
-
-//특정 사용자 검색
-router.get('/:id', isAuth, expressAsyncHandler(async (req, res, next) => {
-  const user = await User.find({userId: req.params._id})
-  if(!user){
     res.status(404).json({code: 404, message: '사용자를 찾을 수 없습니다.'})
   }else{
     res.json({code: 200, user})

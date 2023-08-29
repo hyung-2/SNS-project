@@ -86,7 +86,7 @@ section form .inputbox .profilebox .normal{
   transition: .3s ;
   border: 1px solid var(--main-color);
   cursor: pointer;
-  width: 90%;
+  width: 200px;
 }
 section form .inputbox .profilebox a:hover,
 section form .inputbox .profilebox .normal:hover{
@@ -141,4 +141,88 @@ section form .inputbox .profilebox .imgbox img{
 
 .close{
   display: none;
+}
+
+
+/* 반응형 */
+/* 반응형 */
+@media (max-width: 820px){
+  header{
+    width: 100vw;
+  }
+  section{
+    min-width: 80%;
+    padding: 1rem;
+  }
+  section form h2{
+    font-size: 2rem;
+  }
+  section form .inputbox{
+    flex-flow: column;
+    align-items: center;
+  }
+  section form .inputbox .infobox{
+    margin-right: 0;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  section form .inputbox .infobox label{
+    margin: .5rem auto;
+  }
+  section form .inputbox .infobox label p{
+    width: 20%;
+  }
+  section form .inputbox .profilebox{
+    position: relative;
+  }
+  section form .inputbox .profilebox a,
+  section form .inputbox .profilebox .normal{
+    margin-right: 10rem;
+    width: 200px;
+  }
+  section form .inputbox .profilebox .imgbox{
+    margin-top: 0;
+    width: 120px; height: 120px;
+    position: absolute;
+    right: 0;
+  }
+}
+@media (max-width: 420px){
+  section form h2{
+    margin-bottom: .5rem;
+  }
+  section form .inputbox .infobox label{
+    display: block;
+    width: 100%;
+    margin: 0;
+    position: relative;
+  }
+  section form .inputbox .infobox label p{
+    width: 100%;
+    text-align: start;
+    margin: .5rem 1rem;
+  }
+  section form .inputbox .infobox label button{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin: 0;
+    padding: .3rem .5rem;
+    margin-right: .7rem;
+  }
+  section form .inputbox .infobox label input{
+    margin-left: .3rem;
+    width: 97%;
+  }
+  section form .inputbox .profilebox a,
+  section form .inputbox .profilebox .normal{
+    margin-right: 0;
+    width: 200px;
+  }
+  section form .inputbox .profilebox .imgbox{
+    margin-top: 0;
+    width: 120px; height: 120px; 
+    position: relative;
+    margin-top: .5rem;
+  }
 }

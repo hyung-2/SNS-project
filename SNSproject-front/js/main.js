@@ -13,6 +13,7 @@ const imgBoxs = document.querySelectorAll('.imgbox')
 const findF = document.querySelector('.find-friend')
 const myFollow = document.querySelector('.myfollow')
 
+let imgarr = []
 //윈도우 로드시
 window.addEventListener('load', function(event){
   console.log(localStorage.getItem('author'))
@@ -90,7 +91,7 @@ window.addEventListener('load', function(event){
             document.body.clientHeight, document.documentElement.clientHeight
           );
           
-          if(Math.abs(scroller.getScrollPosition() + document.documentElement.clientHeight - scrollHeight) < 100){
+          if(Math.abs(scroller.getScrollPosition() + document.documentElement.clientHeight - scrollHeight) < 200){
             scroller.isScrollend()
             .then(data => {
               console.log('바닥')
@@ -104,7 +105,7 @@ window.addEventListener('load', function(event){
       function loadPostList(loadNum, arr){
         
           for(let i=offset; i<offset+loadNum; i++){
-            console.log(datas.posts[i])
+            // console.log(datas.posts[i])
             
             const mainBox = document.createElement('div')
             mainBox.className = 'main-box'
@@ -145,9 +146,8 @@ window.addEventListener('load', function(event){
             //좋아요 가져오기
             const heart = mainBox.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.firstElementChild
             if(datas.posts[i].likeUser.includes(localStorage.getItem('author'))){
-              console.log(heart)
-              console.log(datas.posts[i].likeUser.length)
-              console.log(heart.nextElementSibling)
+              // console.log(datas.posts[i].likeUser.length)
+              // console.log(heart.nextElementSibling)
               heart.classList.add('fill')
               heart.nextElementSibling.classList.add('bold')
             }
@@ -167,7 +167,7 @@ window.addEventListener('load', function(event){
                 console.log(cdata)
                 cdata.comment.forEach(c => {
                   if(c.post === datas.posts[i]._id){
-                    console.log(c)
+                    // console.log(c)
                     const reBox = document.createElement('div')
                     reBox.className = 'reaple-box'
                     reBox.innerHTML = `
@@ -212,9 +212,10 @@ window.addEventListener('load', function(event){
     // console.log(mainCon.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.innerText)
     let textbox = mainCon.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.lastElementChild
     console.log(textbox.firstElementChild)
-    const img = textbox.querySelector('img')
+    const imgs = textbox.querySelectorAll('img')
     const video = textbox.querySelector('video')
     console.log(textbox)
+    // console.log(textbox.querySelectorAll('img').length)
     if(textbox.childElementCount == 1 && textbox.firstElementChild.innerHTML == '<br>' ){
       alert('빈 게시글입니다.')
     }else{
@@ -253,13 +254,17 @@ window.addEventListener('load', function(event){
 
       if(textbox.innerHTML.includes('img')){
         //이미지 src 바꾸면서 서버등록
-        const imgFile = document.getElementById('uploadimg')
         const formData = new FormData()
-        console.log(img)
-        console.log(img.src)
-        console.log(imgFile.files)
-        formData.append('uploadimg',imgFile.files[0])
-        console.log(formData)
+      
+          console.log(imgs)
+          for(let i=0; i < imgs.length; i++){
+            console.log(imgs[i].src)
+            formData.append('uploadimg',imgarr[i])
+            console.log(imgarr[i])
+            // console.log(imgFiles.files[0])
+          }
+          console.log(imgarr)
+          console.log(formData)
       
         fetch('http://127.0.0.1:5103/api/posts/img', {
           method: 'POST',
@@ -268,8 +273,12 @@ window.addEventListener('load', function(event){
           .then(response => response.json())
           .then(data => {
             console.log(data.imgurl)
-            img.src = `../../SNSproject-back/${data.imgurl}`
-            console.log(img.src)
+            console.log(data.imgurl.length)
+            for(let i=0; i < data.imgurl.length; i++){
+              console.log(data.imgurl[i])
+              imgs[i].src = `../../SNSproject-back/${data.imgurl[i]}`
+              imgs.forEach(img => console.log(img.src))
+              }
 
             fetch('http://127.0.0.1:5103/api/posts/',{
               method: 'POST', 
@@ -281,7 +290,6 @@ window.addEventListener('load', function(event){
               body: JSON.stringify({
                 post: textbox.innerHTML,
                 createPost: `${dateNow()}`
-                // friendUser: req.body.friendUser,
               })
             })
               .then(response => response.json())
@@ -320,9 +328,7 @@ window.addEventListener('load', function(event){
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data)
-          console.log(data.newPost.post)
-        })
+          console.log(data)})
         .catch(e => console.log(e))
 
         textbox.innerText = ''
@@ -409,8 +415,8 @@ window.addEventListener('load', function(event){
     }else if(e.target.innerText == 'OK' && e.target.previousElementSibling.innerText !== ''){
       //댓글달기
       console.log(e.target.parentElement)
-      console.log(e.target.previousElementSibling.innerText)
-      console.log(e.target.parentElement.parentElement.firstElementChild.firstElementChild.innerText)
+      // console.log(e.target.previousElementSibling.innerText)
+      // console.log(e.target.parentElement.parentElement.firstElementChild.firstElementChild.innerText)
       console.log(localStorage.getItem('author'))
       const reBox = document.createElement('div')
       reBox.className = 'reaple-box'
@@ -545,7 +551,7 @@ function addFileToCurrentLine(line, file){
   }
   console.log(line)
   line.insertAdjacentElement('afterend', createNewLine())
-  console.log(line.nextSibling)
+  // console.log(line.nextSibling)
   line.nextSibling.insertAdjacentElement('afterbegin', file)
   // console.log(line.nextSibling.insertAdjacentElement('afterbegin', file))
   line.nextSibling.insertAdjacentElement('afterend', createNewLine())
@@ -556,36 +562,47 @@ function addFileToCurrentLine(line, file){
 
 //사진,동영상,이모티콘 추가
 function addfiles(){
+  mainBox.focus()
   mainBox.insertAdjacentElement("afterbegin", createNewLine())
   let lastCaretLine = mainBox.firstChild
   //위에 두줄은 따로 빼주면 이미지중복이 일어나지 않을것 - 새로고침넣었더니 괜찮아짐,,
-  console.log(lastCaretLine)
+  console.log(mainBox)
   const uploadInput = this.document.querySelector('.upload input')
+  
+
   uploadInput.addEventListener('change', function(e){
     e.preventDefault()
-    const files = this.files
-    if(files.length > 0){
-      for(let file of files){
-        const fileType = file.type
-        // console.log(fileType)
-        // console.log(lastCaretLine.nodeType)
-        if(fileType.includes('image')){
+    if(mainBox.querySelectorAll('img').length > 1){ //한개씩업로드
+      alert('이미지는 최대 2개까지만 첨부할 수 있습니다.')
+    }else{
+      const files = this.files
+      if(files.length > 2){ //한번에 여러개 업로드
+        alert('이미지는 최대 2개까지만 첨부할 수 있습니다.')
+      }else if(mainBox.querySelectorAll('img').length === 1 && files.length > 1){ //하나 업로드 후 두개 업로드할때
+        alert('이미지는 최대 2개까지만 첨부할 수 있습니다.')
+      }else if(files.length > 0){
+        for(let file of files){
+          const fileType = file.type
+          imgarr.push(file)
+          // console.log(lastCaretLine.nodeType)
+          if(fileType.includes('image')){
+            const img = document.createElement('img')  
+            img.src = URL.createObjectURL(file)
+            lastCaretLine = addFileToCurrentLine(lastCaretLine, img)
 
-          const img = document.createElement('img')  
-          img.src = URL.createObjectURL(file)
-          lastCaretLine = addFileToCurrentLine(lastCaretLine, img)
-          lastCaretLine.nextSibling = ''
-
-        }else if(fileType.includes('video')){
-          const video = document.createElement('video')
-          video.controls = true
-          video.src = URL.createObjectURL(file)
-          lastCaretLine = addFileToCurrentLine(lastCaretLine, video)
+  
+          // }else if(fileType.includes('video')){
+          //   const video = document.createElement('video')
+          //   video.controls = true
+          //   video.src = URL.createObjectURL(file)
+          //   lastCaretLine = addFileToCurrentLine(lastCaretLine, video)
+          }
         }
+        
       }
     }
     // console.log(lastCaretLine)
-    //커서 위치 추가한 파일아래 보이기
+    //커서 위치를 추가한 파일아래 보이기
     const selection = document.getSelection()
     selection.removeAllRanges()
 
@@ -594,6 +611,11 @@ function addfiles(){
     range.collapse()
     selection.addRange(range)
     mainBox.focus()
+  
+  })
+  mainBox.addEventListener('blur', function(e){ //커서 블러처리될때 위치 저장
+    lastCaretLine = document.getSelection().anchorNode
+    // console.log(lastCaretLine.parentNode, lastCaretLine, lastCaretLine.length)
   })
   //글에 이모티콘 추가
   imoticonBox.addEventListener('click', function(e){

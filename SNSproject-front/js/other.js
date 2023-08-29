@@ -117,164 +117,173 @@ window.addEventListener('load', function(event){
           .then(response => response.json())
           .then(datas => {
             console.log(datas)
-            myInfo.lastElementChild.firstElementChild.lastElementChild.innerText = datas.posts.length
-            
-            // datas.posts.forEach(data => {
-            //   console.log(data)
-
-
-            //   const mainBox = document.createElement('div')
-            //   mainBox.className = 'main-box'
-            //   mainBox.innerHTML = `
-            //     <div class="zeazal-box">
-            //       <div class="box-profile">
-            //         <div class="main-profile imgbox">
-            //           <img src="../../SNSproject-back/${userdata.user.imgUrl}" alt="">
-            //         </div>
-            //         <div class="link">
-            //           <a href="/">좋아요</a>
-            //           <a href="/">링크따기</a>
-            //         </div>
-            //       </div>
-            //       <div class="content-box">
-            //         <div class="id-box">
-            //           <h3 class="myID">${userdata.user.userId}</h3>
-            //           <div class="date">${data.createPost}</div>
-            //           <div class="btn">
-            //             <button class="repost">수정</button>
-            //             <button>삭제</button>
-            //           </div>
-            //         </div>
-            //         <div class="main-content" contenteditable="false">
-            //           ${data.post}
-            //         </div>
-            //       </div>
-            //     </div>
-            //     <div class="reaple-box">
-            //       <h3 class="myID">${localStorage.getItem('userId')}</h3>
-            //       <div class="reaple-content" contenteditable></div>
-            //       <button>OK</button>
-            //     </div>
-            //   ` 
+            if(datas.code === 404){
+              console.log('뿌')
+              const noPost = document.createElement('div')
+              noPost.className = 'nopost'
+              noPost.innerHTML=`작성된 글이 없습니다.`
+              mainCon.append(noPost)
+            }else{
+              myInfo.lastElementChild.firstElementChild.lastElementChild.innerText = datas.posts.length
               
-            //   mainCon.append(mainBox)
-            // })
-
-            let offset = 0
-            let loadNum = 10
-
-            showData(datas)
-
-            function showData(datas){
-              if(loadNum > datas.posts.length){
-                loadPostList(datas.posts.length,datas)
-              }else{
-                loadPostList(loadNum,datas)
-              }
-              // 무한스크롤 
-              window.addEventListener('scroll', (event) => {
-                const scrollHeight = Math.max(
-                  document.body.scrollHeight, document.documentElement.scrollHeight,
-                  document.body.offsetHeight, document.documentElement.offsetHeight,
-                  document.body.clientHeight, document.documentElement.clientHeight
-                );
+              // datas.posts.forEach(data => {
+              //   console.log(data)
+  
+  
+              //   const mainBox = document.createElement('div')
+              //   mainBox.className = 'main-box'
+              //   mainBox.innerHTML = `
+              //     <div class="zeazal-box">
+              //       <div class="box-profile">
+              //         <div class="main-profile imgbox">
+              //           <img src="../../SNSproject-back/${userdata.user.imgUrl}" alt="">
+              //         </div>
+              //         <div class="link">
+              //           <a href="/">좋아요</a>
+              //           <a href="/">링크따기</a>
+              //         </div>
+              //       </div>
+              //       <div class="content-box">
+              //         <div class="id-box">
+              //           <h3 class="myID">${userdata.user.userId}</h3>
+              //           <div class="date">${data.createPost}</div>
+              //           <div class="btn">
+              //             <button class="repost">수정</button>
+              //             <button>삭제</button>
+              //           </div>
+              //         </div>
+              //         <div class="main-content" contenteditable="false">
+              //           ${data.post}
+              //         </div>
+              //       </div>
+              //     </div>
+              //     <div class="reaple-box">
+              //       <h3 class="myID">${localStorage.getItem('userId')}</h3>
+              //       <div class="reaple-content" contenteditable></div>
+              //       <button>OK</button>
+              //     </div>
+              //   ` 
                 
-                if(Math.abs(scroller.getScrollPosition() + document.documentElement.clientHeight - scrollHeight) < 100){
-                  scroller.isScrollend()
-                  .then(data => {
-                    console.log('바닥')
-                    offset = offset + loadNum
-                    loadPostList(loadNum,datas)
-
-                  })
+              //   mainCon.append(mainBox)
+              // })
+  
+              let offset = 0
+              let loadNum = 10
+  
+              showData(datas)
+  
+              function showData(datas){
+                if(loadNum > datas.posts.length){
+                  loadPostList(datas.posts.length,datas)
+                }else{
+                  loadPostList(loadNum,datas)
                 }
-              })
-            }
-            function loadPostList(loadNum, arr){
-              for(let i=offset; i<offset+loadNum; i++){
-
-                console.log(datas.posts[i])
-                const mainBox = document.createElement('div')
-                mainBox.className = 'main-box'
-                mainBox.innerHTML = `
-                  <div class="zeazal-box">
-                    <div class="close">${arr.posts[i]._id}</div>
-                    <div class="box-profile">
-                      <div class="main-profile imgbox">
-                        <img src="../../SNSproject-back/${isImgUrl(userdata.user.imgUrl)}" alt="">
-                      </div>
-                      <div class="link">
-                      <span class="heart material-symbols-outlined">favorite</span><span></span>
-                      </div>
-                    </div>
-                    <div class="content-box">
-                      <div class="id-box">
-                        <h3 class="myID">${userdata.user.userId}</h3>
-                        <div class="date">${arr.posts[i].createPost}</div>
-                      </div>
-                      <div class="main-content" contenteditable="false">
-                        ${arr.posts[i].post}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="reaple-box">
-                    <h3 class="myID">${localStorage.getItem('userId')}</h3>
-                    <div class="reaple-content" contenteditable></div>
-                    <button>OK</button>
-                  </div>
-                ` 
-
-                //좋아요 가져오기
-                const heart = mainBox.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.firstElementChild
-                if(datas.posts[i].likeUser.includes(localStorage.getItem('author'))){
-                  console.log(heart)
-                  console.log(datas.posts[i].likeUser.length)
-                  console.log(heart.nextElementSibling)
-                  heart.classList.add('fill')
-                  heart.nextElementSibling.classList.add('bold')
-                }
-                heart.nextElementSibling.innerText = datas.posts[i].likeUser.length
-
-
-                console.log(arr.posts[i]._id)
-                //댓글가져오기
-                fetch(`http://127.0.0.1:5103/api/comments/${localStorage.getItem('other')}/${arr.posts[i]._id}`, {
-                  method: 'GET',
-                  headers: {
-                    'Content-Type':'application/json',
-                    'Authorization':`Bearer ${localStorage.getItem('token')}`
+                // 무한스크롤 
+                window.addEventListener('scroll', (event) => {
+                  const scrollHeight = Math.max(
+                    document.body.scrollHeight, document.documentElement.scrollHeight,
+                    document.body.offsetHeight, document.documentElement.offsetHeight,
+                    document.body.clientHeight, document.documentElement.clientHeight
+                  );
+                  
+                  if(Math.abs(scroller.getScrollPosition() + document.documentElement.clientHeight - scrollHeight) < 100){
+                    scroller.isScrollend()
+                    .then(data => {
+                      console.log('바닥')
+                      offset = offset + loadNum
+                      loadPostList(loadNum,datas)
+  
+                    })
                   }
                 })
-                  .then(response => response.json())
-                  .then(cdata => {
-                    console.log(cdata)
-                    cdata.comment.forEach(c => {
-                      if(c.post === datas.posts[i]._id){
-                        console.log(c)
-                        const reBox = document.createElement('div')
-                        reBox.className = 'reaple-box'
-                        reBox.innerHTML = `
-                          <div class="close">${c._id}</div>
-                          <h3 class="myID">${c.author.userId}</h3>
-                          <div class="reaple-content noborder">${c.comment}</div>
-                          <button class="delete"><span class="material-symbols-outlined">close</span></button>
-                        `
-                      
-                        mainBox.append(reBox)
-                      
-                        //다른사용자 댓글 삭제버튼 안보이기
-                        if(localStorage.getItem('author') !== c.author._id){
-                          reBox.lastElementChild.classList.add('close')
-                        }
-                      }
-                    })
-                  })
-                  .catch(e => console.log(e))
-        
-
-
-                mainCon.append(mainBox)
               }
+              function loadPostList(loadNum, arr){
+                for(let i=offset; i<offset+loadNum; i++){
+  
+                  console.log(datas.posts[i])
+                  const mainBox = document.createElement('div')
+                  mainBox.className = 'main-box'
+                  mainBox.innerHTML = `
+                    <div class="zeazal-box">
+                      <div class="close">${arr.posts[i]._id}</div>
+                      <div class="box-profile">
+                        <div class="main-profile imgbox">
+                          <img src="../../SNSproject-back/${isImgUrl(userdata.user.imgUrl)}" alt="">
+                        </div>
+                        <div class="link">
+                        <span class="heart material-symbols-outlined">favorite</span><span></span>
+                        </div>
+                      </div>
+                      <div class="content-box">
+                        <div class="id-box">
+                          <h3 class="myID">${userdata.user.userId}</h3>
+                          <div class="date">${arr.posts[i].createPost}</div>
+                        </div>
+                        <div class="main-content" contenteditable="false">
+                          ${arr.posts[i].post}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="reaple-box">
+                      <h3 class="myID">${localStorage.getItem('userId')}</h3>
+                      <div class="reaple-content" contenteditable></div>
+                      <button>OK</button>
+                    </div>
+                  ` 
+  
+                  //좋아요 가져오기
+                  const heart = mainBox.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.firstElementChild
+                  if(datas.posts[i].likeUser.includes(localStorage.getItem('author'))){
+                    console.log(heart)
+                    console.log(datas.posts[i].likeUser.length)
+                    console.log(heart.nextElementSibling)
+                    heart.classList.add('fill')
+                    heart.nextElementSibling.classList.add('bold')
+                  }
+                  heart.nextElementSibling.innerText = datas.posts[i].likeUser.length
+  
+  
+                  console.log(arr.posts[i]._id)
+                  //댓글가져오기
+                  fetch(`http://127.0.0.1:5103/api/comments/${localStorage.getItem('other')}/${arr.posts[i]._id}`, {
+                    method: 'GET',
+                    headers: {
+                      'Content-Type':'application/json',
+                      'Authorization':`Bearer ${localStorage.getItem('token')}`
+                    }
+                  })
+                    .then(response => response.json())
+                    .then(cdata => {
+                      console.log(cdata)
+                      cdata.comment.forEach(c => {
+                        if(c.post === datas.posts[i]._id){
+                          console.log(c)
+                          const reBox = document.createElement('div')
+                          reBox.className = 'reaple-box'
+                          reBox.innerHTML = `
+                            <div class="close">${c._id}</div>
+                            <h3 class="myID">${c.author.userId}</h3>
+                            <div class="reaple-content noborder">${c.comment}</div>
+                            <button class="delete"><span class="material-symbols-outlined">close</span></button>
+                          `
+                        
+                          mainBox.append(reBox)
+                        
+                          //다른사용자 댓글 삭제버튼 안보이기
+                          if(localStorage.getItem('author') !== c.author._id){
+                            reBox.lastElementChild.classList.add('close')
+                          }
+                        }
+                      })
+                    })
+                    .catch(e => console.log(e))
+          
+  
+  
+                  mainCon.append(mainBox)
+                }
+              }
+
             }
           })
           .catch(e => console.log(e))
