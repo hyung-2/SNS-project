@@ -305,7 +305,7 @@ window.addEventListener('load', function(event){
               lastCaretLine = textbox.firstChild
           })
           .catch(e => console.log(e))
-          location.reload()
+          // location.reload()
       // }else if(textbox.innerHTML.includes('video')){
         //비디오 src 바꾸면서 서버등록 - 갑자기 비디오파일 안올라가서 포기
         //이미지에 쓴거 가져와서 복붙해서 바꾸면됨

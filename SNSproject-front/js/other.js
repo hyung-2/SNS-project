@@ -12,8 +12,6 @@ const myFollow = document.querySelector('.myfollow')
 
 
 
-
-
 //윈도우 로드시
 window.addEventListener('load', function(event){
   
@@ -126,46 +124,6 @@ window.addEventListener('load', function(event){
             }else{
               myInfo.lastElementChild.firstElementChild.lastElementChild.innerText = datas.posts.length
               
-              // datas.posts.forEach(data => {
-              //   console.log(data)
-  
-  
-              //   const mainBox = document.createElement('div')
-              //   mainBox.className = 'main-box'
-              //   mainBox.innerHTML = `
-              //     <div class="zeazal-box">
-              //       <div class="box-profile">
-              //         <div class="main-profile imgbox">
-              //           <img src="../../SNSproject-back/${userdata.user.imgUrl}" alt="">
-              //         </div>
-              //         <div class="link">
-              //           <a href="/">좋아요</a>
-              //           <a href="/">링크따기</a>
-              //         </div>
-              //       </div>
-              //       <div class="content-box">
-              //         <div class="id-box">
-              //           <h3 class="myID">${userdata.user.userId}</h3>
-              //           <div class="date">${data.createPost}</div>
-              //           <div class="btn">
-              //             <button class="repost">수정</button>
-              //             <button>삭제</button>
-              //           </div>
-              //         </div>
-              //         <div class="main-content" contenteditable="false">
-              //           ${data.post}
-              //         </div>
-              //       </div>
-              //     </div>
-              //     <div class="reaple-box">
-              //       <h3 class="myID">${localStorage.getItem('userId')}</h3>
-              //       <div class="reaple-content" contenteditable></div>
-              //       <button>OK</button>
-              //     </div>
-              //   ` 
-                
-              //   mainCon.append(mainBox)
-              // })
   
               let offset = 0
               let loadNum = 10
@@ -199,7 +157,8 @@ window.addEventListener('load', function(event){
               }
               function loadPostList(loadNum, arr){
                 for(let i=offset; i<offset+loadNum; i++){
-  
+                  console.log(userdata)
+                  console.log(userdata.user.imgUrl)
                   console.log(datas.posts[i])
                   const mainBox = document.createElement('div')
                   mainBox.className = 'main-box'
@@ -208,7 +167,7 @@ window.addEventListener('load', function(event){
                       <div class="close">${arr.posts[i]._id}</div>
                       <div class="box-profile">
                         <div class="main-profile imgbox">
-                          <img src="${isImgUrl(userdata.user.imgUrl)}{" alt="">
+                          <img src="${isImgUrl(userdata.user.imgUrl)}" alt="">
                         </div>
                         <div class="link">
                         <span class="heart material-symbols-outlined">favorite</span><span></span>
