@@ -208,7 +208,7 @@ window.addEventListener('load', function(event){
                       <div class="close">${arr.posts[i]._id}</div>
                       <div class="box-profile">
                         <div class="main-profile imgbox">
-                          <img src="../../SNSproject-back/${isImgUrl(userdata.user.imgUrl)}" alt="">
+                          <img src="${isImgUrl(userdata.user.imgUrl)}{" alt="">
                         </div>
                         <div class="link">
                         <span class="heart material-symbols-outlined">favorite</span><span></span>
