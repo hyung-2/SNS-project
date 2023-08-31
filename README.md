@@ -1,9 +1,9 @@
 ![image](https://github.com/hyung-2/SNS-project/assets/139299837/947fa615-ba85-416c-978d-3d5fe5033f16)
 
 
-시연영상 [<img src="https://img.shields.io/badge/youtube-FF0000?style=flat&logo=youtube&logoColor=white"/>](https://youtu.be/4GBBUhRyA1o?si=08GYR6_TWauvanJt)
-
-자세한 설명 [<img src="https://img.shields.io/badge/notion-000000?style=flat&logo=notion&logoColor=white"/>](https://www.notion.so/project-8-14-8-30-18e37bb7b9c648f79e1062c176fa02a9)
+시연영상<a href="https://youtu.be/4GBBUhRyA1o?si=08GYR6_TWauvanJt" target="_blank"><img src="https://img.shields.io/badge/youtube-FF0000?style=flat&logo=youtube&logoColor=white"/></a>
+자세한 설명 <a href="https://www.notion.so/project-8-14-8-30-18e37bb7b9c648f79e1062c176fa02a9" target="_blank"><img src="https://img.shields.io/badge/notion-000000?style=flat&logo=notion&logoColor=white"/></a>
+[<img src="https://img.shields.io/badge/notion-000000?style=flat&logo=notion&logoColor=white"/>](https://www.notion.so/project-8-14-8-30-18e37bb7b9c648f79e1062c176fa02a9)
 
 ---
 사용된 기술 스택
